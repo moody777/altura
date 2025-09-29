@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Root background fix */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  background: linear-gradient(135deg, #1f2937 0%, #374151 50%, #1f2937 100%);
+  background-attachment: fixed;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1f2937 0%, #374151 50%, #1f2937 100%);
+  background-attachment: fixed;
+  margin: 0;
+  padding: 0;
+  overscroll-behavior: none;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1f2937 0%, #374151 50%, #1f2937 100%);
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ensure all elements have dark background */
+div, section, main, article, aside, nav, header, footer {
+  background-color: transparent;
+}
+
+/* Force dark background on all possible elements */
+* {
+  background-color: transparent;
+}
+
+/* Override any potential white backgrounds */
+html, body, #root, #root > div {
+  background: linear-gradient(135deg, #1f2937 0%, #374151 50%, #1f2937 100%) !important;
+  background-attachment: fixed !important;
+}
+
+/* Prevent any white from showing through */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #1f2937 0%, #374151 50%, #1f2937 100%);
+  z-index: -9999;
+  pointer-events: none;
+}
+
+/* Custom animations */
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-in {
+  animation: slide-in 0.3s ease-out;
+}
+
+/* Line clamp utility */
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #374151;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #B8860B;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #A67C00;
+}
+
+/* Focus styles for accessibility */
+.focus\:ring-2:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(184, 134, 11, 0.5);
+}
+
+/* Premium button hover effects */
+.hover\:shadow-md:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Card hover effects */
+.group:hover .group-hover\:text-\[\#B8860B\] {
+  color: #B8860B;
+}
