@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { useAuth } from './AuthContext';
 import type { Schema } from '../../amplify/data/resource'
 import { generateClient } from 'aws-amplify/data'
 
@@ -14,15 +13,19 @@ interface DataContextType {
   jobApplications: Schema["JobApplication"]["type"][];
   jobSeekers: Schema["JobSeeker"]["type"][];
   investors: Schema["Investor"]["type"][];
+  users: Schema["User"]["type"][];
   loading: boolean;
   searchStartups: (query: string, filters?: any) => Schema["Startup"]["type"][];
   likeStartup: (startupId: string) => Promise<void>;
+  createUser: (userData: Omit<Schema["User"]["type"], 'id' | 'createdAt' | 'updatedAt'>) => Promise<void>;
+  updateUser: (userId: string, userData: Partial<Schema["User"]["type"]>) => Promise<void>;
+  getUserById: (userId: string) => Schema["User"]["type"] | undefined;
   createStartup: (startupData: Omit<Schema["Startup"]["type"], 'id' | 'likes' | 'commentsNo' | 'createdAt' | 'updatedAt'>) => Promise<void>;
   createJob: (jobData: Omit<Schema["Job"]["type"], 'id' | 'createdAt' | 'updatedAt'>) => Promise<void>;
   createJobSeeker: (jobSeekerData: Omit<Schema["JobSeeker"]["type"], 'id' | 'createdAt' | 'updatedAt'>) => Promise<void>;
   createInvestor: (investorData: Omit<Schema["Investor"]["type"], 'id' | 'createdAt' | 'updatedAt'>) => Promise<void>;
   updateApplicationStatus: (applicationId: string, status: Schema["JobApplication"]["type"]['status']) => Promise<void>;
-  addComment: (startupId: string, content: string) => Promise<void>;
+  addComment: (startupId: string, content: string, userId: string) => Promise<void>;
   likeComment: (commentId: string) => Promise<void>;
 }
 
@@ -164,8 +167,8 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [jobApplications, setJobApplications] = useState<Schema["JobApplication"]["type"][]>([]);
   const [jobSeekers, setJobSeekers] = useState<Schema["JobSeeker"]["type"][]>([]);
   const [investors, setInvestors] = useState<Schema["Investor"]["type"][]>([]);
+  const [users, setUsers] = useState<Schema["User"]["type"][]>([]);
   const [loading, setLoading] = useState(false);
-  const { user } = useAuth();
 
 
   const load = async () => {
@@ -176,6 +179,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const { data: jobApplications } = await client.models.JobApplication.list();
     const { data: jobSeekers } = await client.models.JobSeeker.list();
     const { data: investors } = await client.models.Investor.list();
+    const { data: users } = await client.models.User.list();
     setStartups(startups);
     setJobs(jobs);
     setInvestments(investments);
@@ -183,6 +187,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setJobApplications(jobApplications);
     setJobSeekers(jobSeekers);
     setInvestors(investors);
+    setUsers(users);
   };
 
   useEffect(() => {
@@ -272,11 +277,9 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     load(); // Reload data
   };
 
-  const addComment = async (startupId: string, content: string) => {
-    if (!user) return;
-
+  const addComment = async (startupId: string, content: string, userId: string) => {
     await client.models.Comment.create({
-      userId: user.id,
+      userId: userId,
       startupId,
       content,
       timestamp: new Date().toLocaleString('en-US', {
@@ -303,6 +306,25 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const createUser = async (userData: Omit<Schema["User"]["type"], 'id' | 'createdAt' | 'updatedAt'>) => {
+    const { data: newUser } = await client.models.User.create(userData);
+    if (newUser) {
+      setUsers(prev => [...(prev || []), newUser]);
+    }
+  };
+
+  const updateUser = async (userId: string, userData: Partial<Schema["User"]["type"]>) => {
+    await client.models.User.update({
+      id: userId,
+      ...userData
+    });
+    load(); // Reload data
+  };
+
+  const getUserById = (userId: string) => {
+    return users.find(u => u.id === userId);
+  };
+
   return (
     <DataContext.Provider value={{
       startups,
@@ -312,9 +334,13 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
       jobApplications,
       jobSeekers,
       investors,
+      users,
       loading,
       searchStartups,
       likeStartup,
+      createUser,
+      updateUser,
+      getUserById,
       createStartup,
       createJob,
       createJobSeeker,

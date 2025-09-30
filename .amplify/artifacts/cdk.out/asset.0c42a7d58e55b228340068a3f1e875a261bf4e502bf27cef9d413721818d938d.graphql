@@ -1,0 +1,1409 @@
+type Todo @aws_iam @aws_cognito_user_pools {
+  content: String
+  id: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  owner: String
+}
+
+type Startup @aws_iam @aws_cognito_user_pools {
+  id: ID!
+  name: String!
+  description: String!
+  logo: String
+  owner: String
+  type: StartupType
+  sector: String!
+  city: String!
+  country: String!
+  teamSize: String!
+  fundingNeeds: String
+  hiringStatus: StartupHiringStatus
+  founderId: ID
+  website: String
+  likes: Int
+  commentsNo: Int
+  founder: User
+  jobs(filter: ModelJobFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelJobConnection
+  investments(filter: ModelInvestmentFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelInvestmentConnection
+  comments(filter: ModelCommentFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelCommentConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Job @aws_iam @aws_cognito_user_pools {
+  id: ID!
+  owner: String
+  startupId: ID
+  title: String!
+  description: String!
+  salary: JobSalary
+  equity: String
+  city: String!
+  country: String!
+  workMode: JobWorkMode
+  startup: Startup
+  jobApplications(filter: ModelJobApplicationFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelJobApplicationConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Investment @aws_iam @aws_cognito_user_pools {
+  id: ID!
+  startupId: ID
+  startupName: String!
+  sector: String!
+  stage: String!
+  investmentAmount: Int!
+  equity: Float!
+  date: String!
+  status: InvestmentStatus
+  currentValue: Int!
+  gain: Float!
+  owner: String
+  location: String!
+  description: String!
+  tags: [String]!
+  investorId: ID
+  investor: Investor
+  startup: Startup
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Comment @aws_iam @aws_cognito_user_pools {
+  id: ID!
+  owner: String
+  userId: ID
+  startupId: ID
+  content: String!
+  timestamp: String!
+  likes: Int!
+  startup: Startup
+  user: User
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type JobApplication @aws_iam @aws_cognito_user_pools {
+  id: ID!
+  jobId: ID
+  owner: String
+  applicantId: ID
+  status: JobApplicationStatus
+  workMode: JobApplicationWorkMode
+  job: Job
+  applicant: JobSeeker
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type User @aws_iam @aws_cognito_user_pools {
+  id: ID!
+  email: String!
+  name: String!
+  role: UserRole
+  onboardingComplete: Boolean!
+  city: String
+  country: String
+  phone: String
+  linkedin: String
+  bio: String
+  owner: String
+  portfolio: String
+  startups: Startup
+  jobSeekers: JobSeeker
+  investors: Investor
+  comments(filter: ModelCommentFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelCommentConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Education @aws_iam @aws_cognito_user_pools {
+  jobSeekerId: ID
+  jobSeeker: JobSeeker
+  degree: String
+  owner: String
+  fieldOfStudy: String
+  institution: String
+  graduationYear: String
+  gpa: String
+  id: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Experience @aws_iam @aws_cognito_user_pools {
+  jobSeekerId: ID
+  jobSeeker: JobSeeker
+  company: String
+  owner: String
+  position: String
+  startDate: String
+  endDate: String
+  description: String
+  id: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type JobSeeker @aws_iam @aws_cognito_user_pools {
+  id: ID!
+  userId: ID
+  owner: String
+  desiredSalary: Int!
+  skills: [String]!
+  education(filter: ModelEducationFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelEducationConnection
+  experience(filter: ModelExperienceFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelExperienceConnection
+  certifications: [String]!
+  languages: [String]!
+  user: User
+  jobApplications(filter: ModelJobApplicationFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelJobApplicationConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Investor @aws_iam @aws_cognito_user_pools {
+  id: ID!
+  userId: ID
+  owner: String
+  investmentRange: String!
+  sectors: [String]!
+  investments(filter: ModelInvestmentFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelInvestmentConnection
+  user: User
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+enum StartupType {
+  research
+  profit
+  nonprofit
+}
+
+enum StartupHiringStatus {
+  urgent
+  open
+  nothiring
+}
+
+type JobSalary @aws_iam @aws_cognito_user_pools {
+  min: Int!
+  max: Int
+}
+
+enum JobWorkMode {
+  onsite
+  remote
+  hybrid
+}
+
+enum InvestmentStatus {
+  active
+  exited
+  writtenoff
+}
+
+enum JobApplicationStatus {
+  pending
+  reviewed
+  interviewed
+  accepted
+  rejected
+}
+
+enum JobApplicationWorkMode {
+  onsite
+  remote
+  hybrid
+}
+
+enum UserRole {
+  startup
+  investor
+  job_seeker
+}
+
+input AmplifyAIConversationTurnErrorInput {
+  errorType: String!
+  message: String!
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelSubscriptionStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  in: [String]
+  notIn: [String]
+}
+
+input ModelSubscriptionIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  in: [Int]
+  notIn: [Int]
+}
+
+input ModelSubscriptionFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  in: [Float]
+  notIn: [Float]
+}
+
+input ModelSubscriptionBooleanInput {
+  ne: Boolean
+  eq: Boolean
+}
+
+input ModelSubscriptionIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  in: [ID]
+  notIn: [ID]
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelTodoConnection @aws_iam @aws_cognito_user_pools {
+  items: [Todo]!
+  nextToken: String
+}
+
+input ModelTodoFilterInput {
+  content: ModelStringInput
+  id: ModelIDInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelTodoFilterInput]
+  or: [ModelTodoFilterInput]
+  not: ModelTodoFilterInput
+  owner: ModelStringInput
+}
+
+type Query {
+  getTodo(id: ID!): Todo @aws_iam @aws_cognito_user_pools
+  listTodos(filter: ModelTodoFilterInput, limit: Int, nextToken: String): ModelTodoConnection @aws_iam @aws_cognito_user_pools
+  getStartup(id: ID!): Startup @aws_iam @aws_cognito_user_pools
+  listStartups(id: ID, filter: ModelStartupFilterInput, limit: Int, nextToken: String, sortDirection: ModelSortDirection): ModelStartupConnection @aws_iam @aws_cognito_user_pools
+  getJob(id: ID!): Job @aws_iam @aws_cognito_user_pools
+  listJobs(id: ID, filter: ModelJobFilterInput, limit: Int, nextToken: String, sortDirection: ModelSortDirection): ModelJobConnection @aws_iam @aws_cognito_user_pools
+  getInvestment(id: ID!): Investment @aws_iam @aws_cognito_user_pools
+  listInvestments(id: ID, filter: ModelInvestmentFilterInput, limit: Int, nextToken: String, sortDirection: ModelSortDirection): ModelInvestmentConnection @aws_iam @aws_cognito_user_pools
+  getComment(id: ID!): Comment @aws_iam @aws_cognito_user_pools
+  listComments(id: ID, filter: ModelCommentFilterInput, limit: Int, nextToken: String, sortDirection: ModelSortDirection): ModelCommentConnection @aws_iam @aws_cognito_user_pools
+  getJobApplication(id: ID!): JobApplication @aws_iam @aws_cognito_user_pools
+  listJobApplications(id: ID, filter: ModelJobApplicationFilterInput, limit: Int, nextToken: String, sortDirection: ModelSortDirection): ModelJobApplicationConnection @aws_iam @aws_cognito_user_pools
+  getUser(id: ID!): User @aws_iam @aws_cognito_user_pools
+  listUsers(id: ID, filter: ModelUserFilterInput, limit: Int, nextToken: String, sortDirection: ModelSortDirection): ModelUserConnection @aws_iam @aws_cognito_user_pools
+  getEducation(id: ID!): Education @aws_iam @aws_cognito_user_pools
+  listEducations(filter: ModelEducationFilterInput, limit: Int, nextToken: String): ModelEducationConnection @aws_iam @aws_cognito_user_pools
+  getExperience(id: ID!): Experience @aws_iam @aws_cognito_user_pools
+  listExperiences(filter: ModelExperienceFilterInput, limit: Int, nextToken: String): ModelExperienceConnection @aws_iam @aws_cognito_user_pools
+  getJobSeeker(id: ID!): JobSeeker @aws_iam @aws_cognito_user_pools
+  listJobSeekers(id: ID, filter: ModelJobSeekerFilterInput, limit: Int, nextToken: String, sortDirection: ModelSortDirection): ModelJobSeekerConnection @aws_iam @aws_cognito_user_pools
+  getInvestor(id: ID!): Investor @aws_iam @aws_cognito_user_pools
+  listInvestors(id: ID, filter: ModelInvestorFilterInput, limit: Int, nextToken: String, sortDirection: ModelSortDirection): ModelInvestorConnection @aws_iam @aws_cognito_user_pools
+}
+
+input ModelTodoConditionInput {
+  content: ModelStringInput
+  and: [ModelTodoConditionInput]
+  or: [ModelTodoConditionInput]
+  not: ModelTodoConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  owner: ModelStringInput
+}
+
+input CreateTodoInput {
+  content: String
+  id: ID
+}
+
+input UpdateTodoInput {
+  content: String
+  id: ID!
+}
+
+input DeleteTodoInput {
+  id: ID!
+}
+
+type Mutation {
+  createTodo(input: CreateTodoInput!, condition: ModelTodoConditionInput): Todo @aws_iam @aws_cognito_user_pools
+  updateTodo(input: UpdateTodoInput!, condition: ModelTodoConditionInput): Todo @aws_iam @aws_cognito_user_pools
+  deleteTodo(input: DeleteTodoInput!, condition: ModelTodoConditionInput): Todo @aws_iam @aws_cognito_user_pools
+  createStartup(input: CreateStartupInput!, condition: ModelStartupConditionInput): Startup @aws_iam @aws_cognito_user_pools
+  updateStartup(input: UpdateStartupInput!, condition: ModelStartupConditionInput): Startup @aws_iam @aws_cognito_user_pools
+  deleteStartup(input: DeleteStartupInput!, condition: ModelStartupConditionInput): Startup @aws_iam @aws_cognito_user_pools
+  createJob(input: CreateJobInput!, condition: ModelJobConditionInput): Job @aws_iam @aws_cognito_user_pools
+  updateJob(input: UpdateJobInput!, condition: ModelJobConditionInput): Job @aws_iam @aws_cognito_user_pools
+  deleteJob(input: DeleteJobInput!, condition: ModelJobConditionInput): Job @aws_iam @aws_cognito_user_pools
+  createInvestment(input: CreateInvestmentInput!, condition: ModelInvestmentConditionInput): Investment @aws_iam @aws_cognito_user_pools
+  updateInvestment(input: UpdateInvestmentInput!, condition: ModelInvestmentConditionInput): Investment @aws_iam @aws_cognito_user_pools
+  deleteInvestment(input: DeleteInvestmentInput!, condition: ModelInvestmentConditionInput): Investment @aws_iam @aws_cognito_user_pools
+  createComment(input: CreateCommentInput!, condition: ModelCommentConditionInput): Comment @aws_iam @aws_cognito_user_pools
+  updateComment(input: UpdateCommentInput!, condition: ModelCommentConditionInput): Comment @aws_iam @aws_cognito_user_pools
+  deleteComment(input: DeleteCommentInput!, condition: ModelCommentConditionInput): Comment @aws_iam @aws_cognito_user_pools
+  createJobApplication(input: CreateJobApplicationInput!, condition: ModelJobApplicationConditionInput): JobApplication @aws_iam @aws_cognito_user_pools
+  updateJobApplication(input: UpdateJobApplicationInput!, condition: ModelJobApplicationConditionInput): JobApplication @aws_iam @aws_cognito_user_pools
+  deleteJobApplication(input: DeleteJobApplicationInput!, condition: ModelJobApplicationConditionInput): JobApplication @aws_iam @aws_cognito_user_pools
+  createUser(input: CreateUserInput!, condition: ModelUserConditionInput): User @aws_iam @aws_cognito_user_pools
+  updateUser(input: UpdateUserInput!, condition: ModelUserConditionInput): User @aws_iam @aws_cognito_user_pools
+  deleteUser(input: DeleteUserInput!, condition: ModelUserConditionInput): User @aws_iam @aws_cognito_user_pools
+  createEducation(input: CreateEducationInput!, condition: ModelEducationConditionInput): Education @aws_iam @aws_cognito_user_pools
+  updateEducation(input: UpdateEducationInput!, condition: ModelEducationConditionInput): Education @aws_iam @aws_cognito_user_pools
+  deleteEducation(input: DeleteEducationInput!, condition: ModelEducationConditionInput): Education @aws_iam @aws_cognito_user_pools
+  createExperience(input: CreateExperienceInput!, condition: ModelExperienceConditionInput): Experience @aws_iam @aws_cognito_user_pools
+  updateExperience(input: UpdateExperienceInput!, condition: ModelExperienceConditionInput): Experience @aws_iam @aws_cognito_user_pools
+  deleteExperience(input: DeleteExperienceInput!, condition: ModelExperienceConditionInput): Experience @aws_iam @aws_cognito_user_pools
+  createJobSeeker(input: CreateJobSeekerInput!, condition: ModelJobSeekerConditionInput): JobSeeker @aws_iam @aws_cognito_user_pools
+  updateJobSeeker(input: UpdateJobSeekerInput!, condition: ModelJobSeekerConditionInput): JobSeeker @aws_iam @aws_cognito_user_pools
+  deleteJobSeeker(input: DeleteJobSeekerInput!, condition: ModelJobSeekerConditionInput): JobSeeker @aws_iam @aws_cognito_user_pools
+  createInvestor(input: CreateInvestorInput!, condition: ModelInvestorConditionInput): Investor @aws_iam @aws_cognito_user_pools
+  updateInvestor(input: UpdateInvestorInput!, condition: ModelInvestorConditionInput): Investor @aws_iam @aws_cognito_user_pools
+  deleteInvestor(input: DeleteInvestorInput!, condition: ModelInvestorConditionInput): Investor @aws_iam @aws_cognito_user_pools
+}
+
+input ModelSubscriptionTodoFilterInput {
+  content: ModelSubscriptionStringInput
+  id: ModelSubscriptionIDInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionTodoFilterInput]
+  or: [ModelSubscriptionTodoFilterInput]
+  owner: ModelStringInput
+}
+
+type Subscription {
+  onCreateTodo(filter: ModelSubscriptionTodoFilterInput, owner: String): Todo @aws_subscribe(mutations: ["createTodo"]) @aws_iam @aws_cognito_user_pools
+  onUpdateTodo(filter: ModelSubscriptionTodoFilterInput, owner: String): Todo @aws_subscribe(mutations: ["updateTodo"]) @aws_iam @aws_cognito_user_pools
+  onDeleteTodo(filter: ModelSubscriptionTodoFilterInput, owner: String): Todo @aws_subscribe(mutations: ["deleteTodo"]) @aws_iam @aws_cognito_user_pools
+  onCreateStartup(filter: ModelSubscriptionStartupFilterInput, owner: String): Startup @aws_subscribe(mutations: ["createStartup"]) @aws_iam @aws_cognito_user_pools
+  onUpdateStartup(filter: ModelSubscriptionStartupFilterInput, owner: String): Startup @aws_subscribe(mutations: ["updateStartup"]) @aws_iam @aws_cognito_user_pools
+  onDeleteStartup(filter: ModelSubscriptionStartupFilterInput, owner: String): Startup @aws_subscribe(mutations: ["deleteStartup"]) @aws_iam @aws_cognito_user_pools
+  onCreateJob(filter: ModelSubscriptionJobFilterInput, owner: String): Job @aws_subscribe(mutations: ["createJob"]) @aws_iam @aws_cognito_user_pools
+  onUpdateJob(filter: ModelSubscriptionJobFilterInput, owner: String): Job @aws_subscribe(mutations: ["updateJob"]) @aws_iam @aws_cognito_user_pools
+  onDeleteJob(filter: ModelSubscriptionJobFilterInput, owner: String): Job @aws_subscribe(mutations: ["deleteJob"]) @aws_iam @aws_cognito_user_pools
+  onCreateInvestment(filter: ModelSubscriptionInvestmentFilterInput, owner: String): Investment @aws_subscribe(mutations: ["createInvestment"]) @aws_iam @aws_cognito_user_pools
+  onUpdateInvestment(filter: ModelSubscriptionInvestmentFilterInput, owner: String): Investment @aws_subscribe(mutations: ["updateInvestment"]) @aws_iam @aws_cognito_user_pools
+  onDeleteInvestment(filter: ModelSubscriptionInvestmentFilterInput, owner: String): Investment @aws_subscribe(mutations: ["deleteInvestment"]) @aws_iam @aws_cognito_user_pools
+  onCreateComment(filter: ModelSubscriptionCommentFilterInput, owner: String): Comment @aws_subscribe(mutations: ["createComment"]) @aws_iam @aws_cognito_user_pools
+  onUpdateComment(filter: ModelSubscriptionCommentFilterInput, owner: String): Comment @aws_subscribe(mutations: ["updateComment"]) @aws_iam @aws_cognito_user_pools
+  onDeleteComment(filter: ModelSubscriptionCommentFilterInput, owner: String): Comment @aws_subscribe(mutations: ["deleteComment"]) @aws_iam @aws_cognito_user_pools
+  onCreateJobApplication(filter: ModelSubscriptionJobApplicationFilterInput, owner: String): JobApplication @aws_subscribe(mutations: ["createJobApplication"]) @aws_iam @aws_cognito_user_pools
+  onUpdateJobApplication(filter: ModelSubscriptionJobApplicationFilterInput, owner: String): JobApplication @aws_subscribe(mutations: ["updateJobApplication"]) @aws_iam @aws_cognito_user_pools
+  onDeleteJobApplication(filter: ModelSubscriptionJobApplicationFilterInput, owner: String): JobApplication @aws_subscribe(mutations: ["deleteJobApplication"]) @aws_iam @aws_cognito_user_pools
+  onCreateUser(filter: ModelSubscriptionUserFilterInput, owner: String): User @aws_subscribe(mutations: ["createUser"]) @aws_iam @aws_cognito_user_pools
+  onUpdateUser(filter: ModelSubscriptionUserFilterInput, owner: String): User @aws_subscribe(mutations: ["updateUser"]) @aws_iam @aws_cognito_user_pools
+  onDeleteUser(filter: ModelSubscriptionUserFilterInput, owner: String): User @aws_subscribe(mutations: ["deleteUser"]) @aws_iam @aws_cognito_user_pools
+  onCreateEducation(filter: ModelSubscriptionEducationFilterInput, owner: String): Education @aws_subscribe(mutations: ["createEducation"]) @aws_iam @aws_cognito_user_pools
+  onUpdateEducation(filter: ModelSubscriptionEducationFilterInput, owner: String): Education @aws_subscribe(mutations: ["updateEducation"]) @aws_iam @aws_cognito_user_pools
+  onDeleteEducation(filter: ModelSubscriptionEducationFilterInput, owner: String): Education @aws_subscribe(mutations: ["deleteEducation"]) @aws_iam @aws_cognito_user_pools
+  onCreateExperience(filter: ModelSubscriptionExperienceFilterInput, owner: String): Experience @aws_subscribe(mutations: ["createExperience"]) @aws_iam @aws_cognito_user_pools
+  onUpdateExperience(filter: ModelSubscriptionExperienceFilterInput, owner: String): Experience @aws_subscribe(mutations: ["updateExperience"]) @aws_iam @aws_cognito_user_pools
+  onDeleteExperience(filter: ModelSubscriptionExperienceFilterInput, owner: String): Experience @aws_subscribe(mutations: ["deleteExperience"]) @aws_iam @aws_cognito_user_pools
+  onCreateJobSeeker(filter: ModelSubscriptionJobSeekerFilterInput, owner: String): JobSeeker @aws_subscribe(mutations: ["createJobSeeker"]) @aws_iam @aws_cognito_user_pools
+  onUpdateJobSeeker(filter: ModelSubscriptionJobSeekerFilterInput, owner: String): JobSeeker @aws_subscribe(mutations: ["updateJobSeeker"]) @aws_iam @aws_cognito_user_pools
+  onDeleteJobSeeker(filter: ModelSubscriptionJobSeekerFilterInput, owner: String): JobSeeker @aws_subscribe(mutations: ["deleteJobSeeker"]) @aws_iam @aws_cognito_user_pools
+  onCreateInvestor(filter: ModelSubscriptionInvestorFilterInput, owner: String): Investor @aws_subscribe(mutations: ["createInvestor"]) @aws_iam @aws_cognito_user_pools
+  onUpdateInvestor(filter: ModelSubscriptionInvestorFilterInput, owner: String): Investor @aws_subscribe(mutations: ["updateInvestor"]) @aws_iam @aws_cognito_user_pools
+  onDeleteInvestor(filter: ModelSubscriptionInvestorFilterInput, owner: String): Investor @aws_subscribe(mutations: ["deleteInvestor"]) @aws_iam @aws_cognito_user_pools
+}
+
+type ModelStartupConnection @aws_iam @aws_cognito_user_pools {
+  items: [Startup]!
+  nextToken: String
+}
+
+input ModelStartupTypeInput {
+  eq: StartupType
+  ne: StartupType
+}
+
+input ModelStartupHiringStatusInput {
+  eq: StartupHiringStatus
+  ne: StartupHiringStatus
+}
+
+input ModelStartupFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  description: ModelStringInput
+  logo: ModelStringInput
+  owner: ModelStringInput
+  type: ModelStartupTypeInput
+  sector: ModelStringInput
+  city: ModelStringInput
+  country: ModelStringInput
+  teamSize: ModelStringInput
+  fundingNeeds: ModelStringInput
+  hiringStatus: ModelStartupHiringStatusInput
+  founderId: ModelIDInput
+  website: ModelStringInput
+  likes: ModelIntInput
+  commentsNo: ModelIntInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelStartupFilterInput]
+  or: [ModelStartupFilterInput]
+  not: ModelStartupFilterInput
+}
+
+input ModelStartupConditionInput {
+  name: ModelStringInput
+  description: ModelStringInput
+  logo: ModelStringInput
+  owner: ModelStringInput
+  type: ModelStartupTypeInput
+  sector: ModelStringInput
+  city: ModelStringInput
+  country: ModelStringInput
+  teamSize: ModelStringInput
+  fundingNeeds: ModelStringInput
+  hiringStatus: ModelStartupHiringStatusInput
+  founderId: ModelIDInput
+  website: ModelStringInput
+  likes: ModelIntInput
+  commentsNo: ModelIntInput
+  and: [ModelStartupConditionInput]
+  or: [ModelStartupConditionInput]
+  not: ModelStartupConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input CreateStartupInput {
+  id: ID
+  name: String!
+  description: String!
+  logo: String
+  owner: String
+  type: StartupType
+  sector: String!
+  city: String!
+  country: String!
+  teamSize: String!
+  fundingNeeds: String
+  hiringStatus: StartupHiringStatus
+  founderId: ID
+  website: String
+  likes: Int
+  commentsNo: Int
+}
+
+input UpdateStartupInput {
+  id: ID!
+  name: String
+  description: String
+  logo: String
+  owner: String
+  type: StartupType
+  sector: String
+  city: String
+  country: String
+  teamSize: String
+  fundingNeeds: String
+  hiringStatus: StartupHiringStatus
+  founderId: ID
+  website: String
+  likes: Int
+  commentsNo: Int
+}
+
+input DeleteStartupInput {
+  id: ID!
+}
+
+input ModelSubscriptionStartupFilterInput {
+  id: ModelSubscriptionIDInput
+  name: ModelSubscriptionStringInput
+  description: ModelSubscriptionStringInput
+  logo: ModelSubscriptionStringInput
+  type: ModelSubscriptionStringInput
+  sector: ModelSubscriptionStringInput
+  city: ModelSubscriptionStringInput
+  country: ModelSubscriptionStringInput
+  teamSize: ModelSubscriptionStringInput
+  fundingNeeds: ModelSubscriptionStringInput
+  hiringStatus: ModelSubscriptionStringInput
+  founderId: ModelSubscriptionIDInput
+  website: ModelSubscriptionStringInput
+  likes: ModelSubscriptionIntInput
+  commentsNo: ModelSubscriptionIntInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionStartupFilterInput]
+  or: [ModelSubscriptionStartupFilterInput]
+  owner: ModelStringInput
+}
+
+input JobSalaryInput {
+  min: Int!
+  max: Int
+}
+
+type ModelJobConnection @aws_iam @aws_cognito_user_pools {
+  items: [Job]!
+  nextToken: String
+}
+
+input ModelJobWorkModeInput {
+  eq: JobWorkMode
+  ne: JobWorkMode
+}
+
+input ModelJobFilterInput {
+  id: ModelIDInput
+  owner: ModelStringInput
+  startupId: ModelIDInput
+  title: ModelStringInput
+  description: ModelStringInput
+  equity: ModelStringInput
+  city: ModelStringInput
+  country: ModelStringInput
+  workMode: ModelJobWorkModeInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelJobFilterInput]
+  or: [ModelJobFilterInput]
+  not: ModelJobFilterInput
+}
+
+input ModelJobConditionInput {
+  owner: ModelStringInput
+  startupId: ModelIDInput
+  title: ModelStringInput
+  description: ModelStringInput
+  equity: ModelStringInput
+  city: ModelStringInput
+  country: ModelStringInput
+  workMode: ModelJobWorkModeInput
+  and: [ModelJobConditionInput]
+  or: [ModelJobConditionInput]
+  not: ModelJobConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input CreateJobInput {
+  id: ID
+  owner: String
+  startupId: ID
+  title: String!
+  description: String!
+  salary: JobSalaryInput
+  equity: String
+  city: String!
+  country: String!
+  workMode: JobWorkMode
+}
+
+input UpdateJobInput {
+  id: ID!
+  owner: String
+  startupId: ID
+  title: String
+  description: String
+  salary: JobSalaryInput
+  equity: String
+  city: String
+  country: String
+  workMode: JobWorkMode
+}
+
+input DeleteJobInput {
+  id: ID!
+}
+
+input ModelSubscriptionJobFilterInput {
+  id: ModelSubscriptionIDInput
+  startupId: ModelSubscriptionIDInput
+  title: ModelSubscriptionStringInput
+  description: ModelSubscriptionStringInput
+  equity: ModelSubscriptionStringInput
+  city: ModelSubscriptionStringInput
+  country: ModelSubscriptionStringInput
+  workMode: ModelSubscriptionStringInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionJobFilterInput]
+  or: [ModelSubscriptionJobFilterInput]
+  owner: ModelStringInput
+}
+
+type ModelInvestmentConnection @aws_iam @aws_cognito_user_pools {
+  items: [Investment]!
+  nextToken: String
+}
+
+input ModelInvestmentStatusInput {
+  eq: InvestmentStatus
+  ne: InvestmentStatus
+}
+
+input ModelInvestmentFilterInput {
+  id: ModelIDInput
+  startupId: ModelIDInput
+  startupName: ModelStringInput
+  sector: ModelStringInput
+  stage: ModelStringInput
+  investmentAmount: ModelIntInput
+  equity: ModelFloatInput
+  date: ModelStringInput
+  status: ModelInvestmentStatusInput
+  currentValue: ModelIntInput
+  gain: ModelFloatInput
+  owner: ModelStringInput
+  location: ModelStringInput
+  description: ModelStringInput
+  tags: ModelStringInput
+  investorId: ModelIDInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelInvestmentFilterInput]
+  or: [ModelInvestmentFilterInput]
+  not: ModelInvestmentFilterInput
+}
+
+input ModelInvestmentConditionInput {
+  startupId: ModelIDInput
+  startupName: ModelStringInput
+  sector: ModelStringInput
+  stage: ModelStringInput
+  investmentAmount: ModelIntInput
+  equity: ModelFloatInput
+  date: ModelStringInput
+  status: ModelInvestmentStatusInput
+  currentValue: ModelIntInput
+  gain: ModelFloatInput
+  owner: ModelStringInput
+  location: ModelStringInput
+  description: ModelStringInput
+  tags: ModelStringInput
+  investorId: ModelIDInput
+  and: [ModelInvestmentConditionInput]
+  or: [ModelInvestmentConditionInput]
+  not: ModelInvestmentConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input CreateInvestmentInput {
+  id: ID
+  startupId: ID
+  startupName: String!
+  sector: String!
+  stage: String!
+  investmentAmount: Int!
+  equity: Float!
+  date: String!
+  status: InvestmentStatus
+  currentValue: Int!
+  gain: Float!
+  owner: String
+  location: String!
+  description: String!
+  tags: [String]!
+  investorId: ID
+}
+
+input UpdateInvestmentInput {
+  id: ID!
+  startupId: ID
+  startupName: String
+  sector: String
+  stage: String
+  investmentAmount: Int
+  equity: Float
+  date: String
+  status: InvestmentStatus
+  currentValue: Int
+  gain: Float
+  owner: String
+  location: String
+  description: String
+  tags: [String]
+  investorId: ID
+}
+
+input DeleteInvestmentInput {
+  id: ID!
+}
+
+input ModelSubscriptionInvestmentFilterInput {
+  id: ModelSubscriptionIDInput
+  startupId: ModelSubscriptionIDInput
+  startupName: ModelSubscriptionStringInput
+  sector: ModelSubscriptionStringInput
+  stage: ModelSubscriptionStringInput
+  investmentAmount: ModelSubscriptionIntInput
+  equity: ModelSubscriptionFloatInput
+  date: ModelSubscriptionStringInput
+  status: ModelSubscriptionStringInput
+  currentValue: ModelSubscriptionIntInput
+  gain: ModelSubscriptionFloatInput
+  location: ModelSubscriptionStringInput
+  description: ModelSubscriptionStringInput
+  tags: ModelSubscriptionStringInput
+  investorId: ModelSubscriptionIDInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionInvestmentFilterInput]
+  or: [ModelSubscriptionInvestmentFilterInput]
+  owner: ModelStringInput
+}
+
+type ModelCommentConnection @aws_iam @aws_cognito_user_pools {
+  items: [Comment]!
+  nextToken: String
+}
+
+input ModelCommentFilterInput {
+  id: ModelIDInput
+  owner: ModelStringInput
+  userId: ModelIDInput
+  startupId: ModelIDInput
+  content: ModelStringInput
+  timestamp: ModelStringInput
+  likes: ModelIntInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelCommentFilterInput]
+  or: [ModelCommentFilterInput]
+  not: ModelCommentFilterInput
+}
+
+input ModelCommentConditionInput {
+  owner: ModelStringInput
+  userId: ModelIDInput
+  startupId: ModelIDInput
+  content: ModelStringInput
+  timestamp: ModelStringInput
+  likes: ModelIntInput
+  and: [ModelCommentConditionInput]
+  or: [ModelCommentConditionInput]
+  not: ModelCommentConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input CreateCommentInput {
+  id: ID
+  owner: String
+  userId: ID
+  startupId: ID
+  content: String!
+  timestamp: String!
+  likes: Int!
+}
+
+input UpdateCommentInput {
+  id: ID!
+  owner: String
+  userId: ID
+  startupId: ID
+  content: String
+  timestamp: String
+  likes: Int
+}
+
+input DeleteCommentInput {
+  id: ID!
+}
+
+input ModelSubscriptionCommentFilterInput {
+  id: ModelSubscriptionIDInput
+  userId: ModelSubscriptionIDInput
+  startupId: ModelSubscriptionIDInput
+  content: ModelSubscriptionStringInput
+  timestamp: ModelSubscriptionStringInput
+  likes: ModelSubscriptionIntInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionCommentFilterInput]
+  or: [ModelSubscriptionCommentFilterInput]
+  owner: ModelStringInput
+}
+
+type ModelJobApplicationConnection @aws_iam @aws_cognito_user_pools {
+  items: [JobApplication]!
+  nextToken: String
+}
+
+input ModelJobApplicationStatusInput {
+  eq: JobApplicationStatus
+  ne: JobApplicationStatus
+}
+
+input ModelJobApplicationWorkModeInput {
+  eq: JobApplicationWorkMode
+  ne: JobApplicationWorkMode
+}
+
+input ModelJobApplicationFilterInput {
+  id: ModelIDInput
+  jobId: ModelIDInput
+  owner: ModelStringInput
+  applicantId: ModelIDInput
+  status: ModelJobApplicationStatusInput
+  workMode: ModelJobApplicationWorkModeInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelJobApplicationFilterInput]
+  or: [ModelJobApplicationFilterInput]
+  not: ModelJobApplicationFilterInput
+}
+
+input ModelJobApplicationConditionInput {
+  jobId: ModelIDInput
+  owner: ModelStringInput
+  applicantId: ModelIDInput
+  status: ModelJobApplicationStatusInput
+  workMode: ModelJobApplicationWorkModeInput
+  and: [ModelJobApplicationConditionInput]
+  or: [ModelJobApplicationConditionInput]
+  not: ModelJobApplicationConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input CreateJobApplicationInput {
+  id: ID
+  jobId: ID
+  owner: String
+  applicantId: ID
+  status: JobApplicationStatus
+  workMode: JobApplicationWorkMode
+}
+
+input UpdateJobApplicationInput {
+  id: ID!
+  jobId: ID
+  owner: String
+  applicantId: ID
+  status: JobApplicationStatus
+  workMode: JobApplicationWorkMode
+}
+
+input DeleteJobApplicationInput {
+  id: ID!
+}
+
+input ModelSubscriptionJobApplicationFilterInput {
+  id: ModelSubscriptionIDInput
+  jobId: ModelSubscriptionIDInput
+  applicantId: ModelSubscriptionIDInput
+  status: ModelSubscriptionStringInput
+  workMode: ModelSubscriptionStringInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionJobApplicationFilterInput]
+  or: [ModelSubscriptionJobApplicationFilterInput]
+  owner: ModelStringInput
+}
+
+type ModelUserConnection @aws_iam @aws_cognito_user_pools {
+  items: [User]!
+  nextToken: String
+}
+
+input ModelUserRoleInput {
+  eq: UserRole
+  ne: UserRole
+}
+
+input ModelUserFilterInput {
+  id: ModelIDInput
+  email: ModelStringInput
+  name: ModelStringInput
+  role: ModelUserRoleInput
+  onboardingComplete: ModelBooleanInput
+  city: ModelStringInput
+  country: ModelStringInput
+  phone: ModelStringInput
+  linkedin: ModelStringInput
+  bio: ModelStringInput
+  owner: ModelStringInput
+  portfolio: ModelStringInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelUserFilterInput]
+  or: [ModelUserFilterInput]
+  not: ModelUserFilterInput
+}
+
+input ModelUserConditionInput {
+  email: ModelStringInput
+  name: ModelStringInput
+  role: ModelUserRoleInput
+  onboardingComplete: ModelBooleanInput
+  city: ModelStringInput
+  country: ModelStringInput
+  phone: ModelStringInput
+  linkedin: ModelStringInput
+  bio: ModelStringInput
+  owner: ModelStringInput
+  portfolio: ModelStringInput
+  and: [ModelUserConditionInput]
+  or: [ModelUserConditionInput]
+  not: ModelUserConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input CreateUserInput {
+  id: ID
+  email: String!
+  name: String!
+  role: UserRole
+  onboardingComplete: Boolean!
+  city: String
+  country: String
+  phone: String
+  linkedin: String
+  bio: String
+  owner: String
+  portfolio: String
+}
+
+input UpdateUserInput {
+  id: ID!
+  email: String
+  name: String
+  role: UserRole
+  onboardingComplete: Boolean
+  city: String
+  country: String
+  phone: String
+  linkedin: String
+  bio: String
+  owner: String
+  portfolio: String
+}
+
+input DeleteUserInput {
+  id: ID!
+}
+
+input ModelSubscriptionUserFilterInput {
+  id: ModelSubscriptionIDInput
+  email: ModelSubscriptionStringInput
+  name: ModelSubscriptionStringInput
+  role: ModelSubscriptionStringInput
+  onboardingComplete: ModelSubscriptionBooleanInput
+  city: ModelSubscriptionStringInput
+  country: ModelSubscriptionStringInput
+  phone: ModelSubscriptionStringInput
+  linkedin: ModelSubscriptionStringInput
+  bio: ModelSubscriptionStringInput
+  portfolio: ModelSubscriptionStringInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionUserFilterInput]
+  or: [ModelSubscriptionUserFilterInput]
+  owner: ModelStringInput
+}
+
+type ModelEducationConnection @aws_iam @aws_cognito_user_pools {
+  items: [Education]!
+  nextToken: String
+}
+
+input ModelEducationFilterInput {
+  jobSeekerId: ModelIDInput
+  degree: ModelStringInput
+  owner: ModelStringInput
+  fieldOfStudy: ModelStringInput
+  institution: ModelStringInput
+  graduationYear: ModelStringInput
+  gpa: ModelStringInput
+  id: ModelIDInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelEducationFilterInput]
+  or: [ModelEducationFilterInput]
+  not: ModelEducationFilterInput
+}
+
+input ModelEducationConditionInput {
+  jobSeekerId: ModelIDInput
+  degree: ModelStringInput
+  owner: ModelStringInput
+  fieldOfStudy: ModelStringInput
+  institution: ModelStringInput
+  graduationYear: ModelStringInput
+  gpa: ModelStringInput
+  and: [ModelEducationConditionInput]
+  or: [ModelEducationConditionInput]
+  not: ModelEducationConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input CreateEducationInput {
+  jobSeekerId: ID
+  degree: String
+  owner: String
+  fieldOfStudy: String
+  institution: String
+  graduationYear: String
+  gpa: String
+  id: ID
+}
+
+input UpdateEducationInput {
+  jobSeekerId: ID
+  degree: String
+  owner: String
+  fieldOfStudy: String
+  institution: String
+  graduationYear: String
+  gpa: String
+  id: ID!
+}
+
+input DeleteEducationInput {
+  id: ID!
+}
+
+input ModelSubscriptionEducationFilterInput {
+  jobSeekerId: ModelSubscriptionIDInput
+  degree: ModelSubscriptionStringInput
+  fieldOfStudy: ModelSubscriptionStringInput
+  institution: ModelSubscriptionStringInput
+  graduationYear: ModelSubscriptionStringInput
+  gpa: ModelSubscriptionStringInput
+  id: ModelSubscriptionIDInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionEducationFilterInput]
+  or: [ModelSubscriptionEducationFilterInput]
+  owner: ModelStringInput
+}
+
+type ModelExperienceConnection @aws_iam @aws_cognito_user_pools {
+  items: [Experience]!
+  nextToken: String
+}
+
+input ModelExperienceFilterInput {
+  jobSeekerId: ModelIDInput
+  company: ModelStringInput
+  owner: ModelStringInput
+  position: ModelStringInput
+  startDate: ModelStringInput
+  endDate: ModelStringInput
+  description: ModelStringInput
+  id: ModelIDInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelExperienceFilterInput]
+  or: [ModelExperienceFilterInput]
+  not: ModelExperienceFilterInput
+}
+
+input ModelExperienceConditionInput {
+  jobSeekerId: ModelIDInput
+  company: ModelStringInput
+  owner: ModelStringInput
+  position: ModelStringInput
+  startDate: ModelStringInput
+  endDate: ModelStringInput
+  description: ModelStringInput
+  and: [ModelExperienceConditionInput]
+  or: [ModelExperienceConditionInput]
+  not: ModelExperienceConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input CreateExperienceInput {
+  jobSeekerId: ID
+  company: String
+  owner: String
+  position: String
+  startDate: String
+  endDate: String
+  description: String
+  id: ID
+}
+
+input UpdateExperienceInput {
+  jobSeekerId: ID
+  company: String
+  owner: String
+  position: String
+  startDate: String
+  endDate: String
+  description: String
+  id: ID!
+}
+
+input DeleteExperienceInput {
+  id: ID!
+}
+
+input ModelSubscriptionExperienceFilterInput {
+  jobSeekerId: ModelSubscriptionIDInput
+  company: ModelSubscriptionStringInput
+  position: ModelSubscriptionStringInput
+  startDate: ModelSubscriptionStringInput
+  endDate: ModelSubscriptionStringInput
+  description: ModelSubscriptionStringInput
+  id: ModelSubscriptionIDInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionExperienceFilterInput]
+  or: [ModelSubscriptionExperienceFilterInput]
+  owner: ModelStringInput
+}
+
+type ModelJobSeekerConnection @aws_iam @aws_cognito_user_pools {
+  items: [JobSeeker]!
+  nextToken: String
+}
+
+input ModelJobSeekerFilterInput {
+  id: ModelIDInput
+  userId: ModelIDInput
+  owner: ModelStringInput
+  desiredSalary: ModelIntInput
+  skills: ModelStringInput
+  certifications: ModelStringInput
+  languages: ModelStringInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelJobSeekerFilterInput]
+  or: [ModelJobSeekerFilterInput]
+  not: ModelJobSeekerFilterInput
+}
+
+input ModelJobSeekerConditionInput {
+  userId: ModelIDInput
+  owner: ModelStringInput
+  desiredSalary: ModelIntInput
+  skills: ModelStringInput
+  certifications: ModelStringInput
+  languages: ModelStringInput
+  and: [ModelJobSeekerConditionInput]
+  or: [ModelJobSeekerConditionInput]
+  not: ModelJobSeekerConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input CreateJobSeekerInput {
+  id: ID
+  userId: ID
+  owner: String
+  desiredSalary: Int!
+  skills: [String]!
+  certifications: [String]!
+  languages: [String]!
+}
+
+input UpdateJobSeekerInput {
+  id: ID!
+  userId: ID
+  owner: String
+  desiredSalary: Int
+  skills: [String]
+  certifications: [String]
+  languages: [String]
+}
+
+input DeleteJobSeekerInput {
+  id: ID!
+}
+
+input ModelSubscriptionJobSeekerFilterInput {
+  id: ModelSubscriptionIDInput
+  userId: ModelSubscriptionIDInput
+  desiredSalary: ModelSubscriptionIntInput
+  skills: ModelSubscriptionStringInput
+  certifications: ModelSubscriptionStringInput
+  languages: ModelSubscriptionStringInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionJobSeekerFilterInput]
+  or: [ModelSubscriptionJobSeekerFilterInput]
+  owner: ModelStringInput
+}
+
+type ModelInvestorConnection @aws_iam @aws_cognito_user_pools {
+  items: [Investor]!
+  nextToken: String
+}
+
+input ModelInvestorFilterInput {
+  id: ModelIDInput
+  userId: ModelIDInput
+  owner: ModelStringInput
+  investmentRange: ModelStringInput
+  sectors: ModelStringInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelInvestorFilterInput]
+  or: [ModelInvestorFilterInput]
+  not: ModelInvestorFilterInput
+}
+
+input ModelInvestorConditionInput {
+  userId: ModelIDInput
+  owner: ModelStringInput
+  investmentRange: ModelStringInput
+  sectors: ModelStringInput
+  and: [ModelInvestorConditionInput]
+  or: [ModelInvestorConditionInput]
+  not: ModelInvestorConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input CreateInvestorInput {
+  id: ID
+  userId: ID
+  owner: String
+  investmentRange: String!
+  sectors: [String]!
+}
+
+input UpdateInvestorInput {
+  id: ID!
+  userId: ID
+  owner: String
+  investmentRange: String
+  sectors: [String]
+}
+
+input DeleteInvestorInput {
+  id: ID!
+}
+
+input ModelSubscriptionInvestorFilterInput {
+  id: ModelSubscriptionIDInput
+  userId: ModelSubscriptionIDInput
+  investmentRange: ModelSubscriptionStringInput
+  sectors: ModelSubscriptionStringInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionInvestorFilterInput]
+  or: [ModelSubscriptionInvestorFilterInput]
+  owner: ModelStringInput
+}

@@ -140,6 +140,13 @@
               "isRequired": false,
               "attributes": []
             },
+            "owner": {
+              "name": "owner",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
             "type": {
               "name": "type",
               "isArray": false,
@@ -357,6 +364,13 @@
               "isArray": false,
               "type": "ID",
               "isRequired": true,
+              "attributes": []
+            },
+            "owner": {
+              "name": "owner",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
               "attributes": []
             },
             "startupId": {
@@ -597,6 +611,13 @@
               "isRequired": true,
               "attributes": []
             },
+            "owner": {
+              "name": "owner",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
             "location": {
               "name": "location",
               "isArray": false,
@@ -729,6 +750,13 @@
               "isArray": false,
               "type": "ID",
               "isRequired": true,
+              "attributes": []
+            },
+            "owner": {
+              "name": "owner",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
               "attributes": []
             },
             "userId": {
@@ -875,6 +903,13 @@
               "name": "jobId",
               "isArray": false,
               "type": "ID",
+              "isRequired": false,
+              "attributes": []
+            },
+            "owner": {
+              "name": "owner",
+              "isArray": false,
+              "type": "String",
               "isRequired": false,
               "attributes": []
             },
@@ -1073,6 +1108,13 @@
               "isRequired": false,
               "attributes": []
             },
+            "owner": {
+              "name": "owner",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
             "portfolio": {
               "name": "portfolio",
               "isArray": false,
@@ -1248,6 +1290,13 @@
               "isRequired": false,
               "attributes": []
             },
+            "owner": {
+              "name": "owner",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
             "fieldOfStudy": {
               "name": "fieldOfStudy",
               "isArray": false,
@@ -1372,6 +1421,13 @@
               "isRequired": false,
               "attributes": []
             },
+            "owner": {
+              "name": "owner",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
             "position": {
               "name": "position",
               "isArray": false,
@@ -1471,6 +1527,13 @@
               "name": "userId",
               "isArray": false,
               "type": "ID",
+              "isRequired": false,
+              "attributes": []
+            },
+            "owner": {
+              "name": "owner",
+              "isArray": false,
+              "type": "String",
               "isRequired": false,
               "attributes": []
             },
@@ -1647,6 +1710,13 @@
               "name": "userId",
               "isArray": false,
               "type": "ID",
+              "isRequired": false,
+              "attributes": []
+            },
+            "owner": {
+              "name": "owner",
+              "isArray": false,
+              "type": "String",
               "isRequired": false,
               "attributes": []
             },
