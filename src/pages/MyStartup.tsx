@@ -2,6 +2,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useData } from '../contexts/DataContext';
 import { useNotifications } from '../contexts/NotificationContext';
+// import { generateClient } from 'aws-amplify/data';
+// import { createAIHooks } from '@aws-amplify/ui-react-ai';
+// import type { Schema } from '../../amplify/data/resource';
 import { 
   Building, 
   Plus, 
@@ -22,6 +25,9 @@ import {
   Minimize2,
   Maximize2
 } from 'lucide-react';
+
+// const client = generateClient<Schema>();
+// const { useAIConversation } = createAIHooks(client);
 
 const MyStartup: React.FC = () => {
   const { user } = useAuth();

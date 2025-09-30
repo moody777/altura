@@ -33,6 +33,12 @@
     "groups"
    ]
   },
+  "AWS::Amplify::AI::Conversation": {
+   "version": "1",
+   "stackOutputs": [
+    "definedConversationHandlers"
+   ]
+  },
   "AWS::Amplify::GraphQL": {
    "version": "1",
    "stackOutputs": [
@@ -135,6 +141,23 @@
   },
   "groups": {
    "Value": "[]"
+  },
+  "definedConversationHandlers": {
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "[\"",
+      {
+       "Fn::GetAtt": [
+        "data7552DF31",
+        "Outputs.amplifyvitereacttypescriptstarterayasandboxed6b78520fdataamplifyDataChatConversationDirectiveLambdaStackNestedStackChatConversationDirectiveLambdaStackNestedStackResourceD520949EOutputsamplifyvitereacttypescriptstarterayasandboxed6b78520fdaE7F5DB31"
+       ]
+      },
+      "\"]"
+     ]
+    ]
+   }
   },
   "awsAppsyncApiId": {
    "Value": {
@@ -299,7 +322,7 @@
        {
         "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
        },
-       "/5798290f416d8fea33a6afd502572456758b19c735b4566a8c397c12cd9dda4a.json"
+       "/2303927b2bb0e5edf30b0d82ddc1995af857aed947035bba3a0b260f4e5afde2.json"
       ]
      ]
     }
