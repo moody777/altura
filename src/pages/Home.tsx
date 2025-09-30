@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { useData, Startup } from '../contexts/DataContext';
+import { useData } from '../contexts/DataContext';
 import { useAuth } from '../contexts/AuthContext';
 import StartupCard from '../components/StartupCard';
 import SearchFilters from '../components/SearchFilters';

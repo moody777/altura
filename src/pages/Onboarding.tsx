@@ -16,7 +16,7 @@ import {
 
 const Onboarding: React.FC = () => {
   const { user, updateUser, loading } = useAuth();
-  const { createStartup } = useData();
+  const { createStartup, createJobSeeker, createInvestor } = useData();
   const { addNotification } = useNotifications();
   const [step, setStep] = useState(1);
 
@@ -200,7 +200,12 @@ const Onboarding: React.FC = () => {
     await updateUser({
       role: formData.role as UserRole,
       onboardingComplete: true,
-      location: formData.location.city ? formData.location : undefined
+      city: formData.location.city ? formData.location.city : undefined,
+      country: formData.location.country ? formData.location.country : undefined,
+      phone: formData.personalInfo.phone ? formData.personalInfo.phone : undefined,
+      linkedin: formData.personalInfo.linkedin ? formData.personalInfo.linkedin : undefined,
+      bio: formData.personalInfo.bio ? formData.personalInfo.bio : undefined,
+      portfolio: formData.personalInfo.portfolio ? formData.personalInfo.portfolio : undefined
     });
 
     // Create startup if user selected startup role
@@ -210,19 +215,34 @@ const Onboarding: React.FC = () => {
         description: formData.companyDescription,
         type: formData.type as any,
         sector: formData.sector,
-        location: {
-          city: formData.location.city,
-          country: formData.location.country,
-          coordinates: [0, 0] // Default coordinates
-        },
+        city: formData.location.city,
+        country: formData.location.country,
         teamSize: formData.teamSize,
         fundingNeeds: formData.fundingNeeds as any,
         hiringStatus: formData.hiringStatus as any,
         founderId: user.id,
-        founderName: user.name,
-        website: formData.website,
-        tags: formData.tags || []
-      });
+        website: formData.website
+      } as any);
+    }
+
+    // Create job seeker profile if user selected job_seeker role
+    if (formData.role === 'job_seeker' && user) {
+      createJobSeeker({
+        userId: user.id,
+        desiredSalary: formData.desiredSalary,
+        skills: formData.skills,
+        certifications: formData.certifications,
+        languages: formData.languages,
+      } as any);
+    }
+
+    // Create investor profile if user selected investor role
+    if (formData.role === 'investor' && user) {
+      createInvestor({
+        userId: user.id,
+        investmentRange: formData.investmentRange,
+        sectors: formData.sectors,
+      } as any);
     }
     
     addNotification({

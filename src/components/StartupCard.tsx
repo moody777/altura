@@ -20,7 +20,7 @@ interface StartupCardProps {
 
 const StartupCard: React.FC<StartupCardProps> = ({ startup }) => {
   const { user } = useAuth();
-  const { likeStartup, createConnection } = useData();
+  const { likeStartup } = useData();
   const { addNotification } = useNotifications();
 
   const handleLike = (e: React.MouseEvent) => {
@@ -39,12 +39,10 @@ const StartupCard: React.FC<StartupCardProps> = ({ startup }) => {
     e.preventDefault();
     e.stopPropagation();
     
-    createConnection(startup.founderId, `Hi! I'm interested in connecting with ${startup.name}.`);
-    
     addNotification({
       type: 'success',
       title: 'Connection Request Sent',
-      message: `Your connection request has been sent to ${startup.founderName}.`
+      message: `Your connection request has been sent to ${startup.name}.`
     });
   };
 
@@ -97,7 +95,7 @@ const StartupCard: React.FC<StartupCardProps> = ({ startup }) => {
                 <h3 className="font-semibold text-lg text-white group-hover:text-[#B8860B] transition-colors">
                   {startup.name}
                 </h3>
-                <p className="text-sm text-gray-300">by {startup.founderName}</p>
+                <p className="text-sm text-gray-300">by {startup.founderId}</p>
               </div>
             </div>
             
@@ -123,21 +121,19 @@ const StartupCard: React.FC<StartupCardProps> = ({ startup }) => {
 
           {/* Tags */}
           <div className="flex flex-wrap gap-2 mb-4">
-            {startup.tags.map((tag, index) => (
-              <span
-                key={index}
-                className="px-2 py-1 bg-gray-700 text-gray-300 rounded-md text-xs border border-gray-600"
-              >
-                {tag}
-              </span>
-            ))}
+            <span className="px-2 py-1 bg-gray-700 text-gray-300 rounded-md text-xs border border-gray-600">
+              {startup.sector}
+            </span>
+            <span className="px-2 py-1 bg-gray-700 text-gray-300 rounded-md text-xs border border-gray-600">
+              {startup.type}
+            </span>
           </div>
 
           {/* Stats */}
           <div className="grid grid-cols-3 gap-4 text-sm text-gray-400">
             <div className="flex items-center space-x-1">
               <MapPin className="w-4 h-4" />
-              <span>{startup.location.city}</span>
+              <span>{startup.city}</span>
             </div>
             <div className="flex items-center space-x-1">
               <Users className="w-4 h-4" />

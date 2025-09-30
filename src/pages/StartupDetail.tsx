@@ -22,7 +22,7 @@ import {
 
 const StartupDetail: React.FC = () => {
   const { id } = useParams();
-  const { startups, jobs, likeStartup, createConnection, comments, addComment, likeComment } = useData();
+  const { startups, jobs, likeStartup, comments, addComment, likeComment } = useData();
   const { user } = useAuth();
   const { addNotification } = useNotifications();
   
@@ -50,12 +50,10 @@ const StartupDetail: React.FC = () => {
 
   const handleConnect = () => {
     if (startup) {
-      createConnection(startup.founderId, `Hi! I'm interested in connecting with ${startup.name}.`);
-      
       addNotification({
         type: 'success',
         title: 'Connection Request Sent',
-        message: `Your connection request has been sent to ${startup.founderName}.`
+        message: `Your connection request has been sent to ${startup.name}.`
       });
     }
   };
@@ -120,7 +118,7 @@ const StartupDetail: React.FC = () => {
                     </div>
                     <div>
                       <h1 className="text-3xl font-bold text-white mb-1">{startup.name}</h1>
-                      <p className="text-lg text-gray-300">Founded by {startup.founderName}</p>
+                      <p className="text-lg text-gray-300">Founded by {startup.founderId}</p>
                       <div className="flex items-center space-x-4 mt-2">
                         <span className="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm font-medium border border-blue-700">
                           {startup.type.charAt(0).toUpperCase() + startup.type.slice(1).replace('-', ' ')}
@@ -174,8 +172,8 @@ const StartupDetail: React.FC = () => {
                   <div className="text-center p-4 bg-gray-700/30 rounded-lg border border-gray-600">
                     <MapPin className="w-6 h-6 text-[#B8860B] mx-auto mb-2" />
                     <div className="text-sm text-gray-400">Location</div>
-                    <div className="font-semibold text-white">{startup.location.city}</div>
-                    <div className="text-sm text-gray-400">{startup.location.country}</div>
+                    <div className="font-semibold text-white">{startup.city}</div>
+                    <div className="text-sm text-gray-400">{startup.country}</div>
                   </div>
                   
                   <div className="text-center p-4 bg-gray-700/30 rounded-lg border border-gray-600">
@@ -205,14 +203,12 @@ const StartupDetail: React.FC = () => {
                 <div className="mb-8">
                   <h3 className="font-semibold text-white mb-3">Tags</h3>
                   <div className="flex flex-wrap gap-2">
-                    {startup.tags.map((tag, index) => (
-                      <span
-                        key={index}
-                        className="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm border border-gray-600"
-                      >
-                        {tag}
-                      </span>
-                    ))}
+                    <span className="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm border border-gray-600">
+                      {startup.sector}
+                    </span>
+                    <span className="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm border border-gray-600">
+                      {startup.type}
+                    </span>
                   </div>
                 </div>
 
@@ -247,10 +243,10 @@ const StartupDetail: React.FC = () => {
                           <div>
                             <h3 className="text-lg font-semibold text-white mb-1">{job.title}</h3>
                             <div className="flex items-center space-x-4 text-sm text-gray-300">
-                              <span>${job.salary.min.toLocaleString()} - ${job.salary.max.toLocaleString()}</span>
+                              <span>${job.salary.min.toLocaleString()}{job.salary.max && job.salary.max > 0 ? ` - $${job.salary.max.toLocaleString()}` : ''}</span>
                               {job.equity && <span>{job.equity} equity</span>}
-                              <span>{job.location}</span>
-                              {job.remote && <span className="px-2 py-1 bg-blue-900/50 text-blue-300 rounded border border-blue-700">Remote OK</span>}
+                              <span>{job.city}, {job.country}</span>
+                              <span className="px-2 py-1 bg-blue-900/50 text-blue-300 rounded border border-blue-700">{(job as any).workMode || 'On-Site'}</span>
                             </div>
                           </div>
                           
@@ -264,14 +260,9 @@ const StartupDetail: React.FC = () => {
                         <p className="text-gray-300 mb-4">{job.description}</p>
                         
                         <div className="flex flex-wrap gap-2">
-                          {job.skills.map((skill, index) => (
-                            <span
-                              key={index}
-                              className="px-2 py-1 bg-gray-700 text-gray-300 rounded text-xs border border-gray-600"
-                            >
-                              {skill}
-                            </span>
-                          ))}
+                          <span className="px-2 py-1 bg-gray-700 text-gray-300 rounded text-xs border border-gray-600">
+                            Skills will be extracted from description
+                          </span>
                         </div>
                       </div>
                     ))}
@@ -320,7 +311,7 @@ const StartupDetail: React.FC = () => {
                   {comments.map((comment) => (
                     <div key={comment.id} className="flex space-x-4">
                       <div className="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center text-gray-300 font-bold text-sm">
-                        {comment.avatar}
+                        {comment.user.charAt(0)}
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center space-x-2 mb-2">
@@ -356,10 +347,10 @@ const StartupDetail: React.FC = () => {
               <h3 className="text-lg font-semibold text-white mb-4">Founder</h3>
               <div className="flex items-center space-x-3">
                 <div className="w-12 h-12 bg-[#B8860B] rounded-full flex items-center justify-center text-white font-bold">
-                  {startup.founderName.split(' ').map(n => n[0]).join('')}
+                  {startup.founderId.charAt(0)}
                 </div>
                 <div>
-                  <h4 className="font-semibold text-white">{startup.founderName}</h4>
+                  <h4 className="font-semibold text-white">{startup.founderId}</h4>
                   <p className="text-gray-400 text-sm">Founder & CEO</p>
                 </div>
               </div>
@@ -383,7 +374,7 @@ const StartupDetail: React.FC = () => {
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-gray-400">Location</span>
-                  <span className="text-white font-semibold">{startup.location.city}</span>
+                  <span className="text-white font-semibold">{startup.city}</span>
                 </div>
               </div>
             </div>

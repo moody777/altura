@@ -1,0 +1,212 @@
+type Todo @model @auth(rules: [{allow: public, provider: iam, operations: [read]},
+  {allow: owner, ownerField: "owner"}])
+{
+  content: String
+}
+
+type Startup @model @auth(rules: [{allow: public, provider: iam, operations: [read]},
+  {allow: owner, ownerField: "owner"}])
+{
+  id: ID! @primaryKey
+  name: String!
+  description: String!
+  logo: String
+  type: StartupType
+  sector: String!
+  city: String!
+  country: String!
+  teamSize: String!
+  fundingNeeds: String
+  hiringStatus: StartupHiringStatus
+  founderId: ID
+  website: String
+  likes: Int
+  commentsNo: Int
+  founder: User @belongsTo(references: ["founderId"])
+  jobs: [Job] @hasMany(references: ["startupId"])
+  investments: [Investment] @hasMany(references: ["startupId"])
+  comments: [Comment] @hasMany(references: ["startupId"])
+}
+
+type Job @model @auth(rules: [{allow: public, provider: iam, operations: [read]},
+  {allow: owner, ownerField: "owner"}])
+{
+  id: ID! @primaryKey
+  startupId: ID
+  title: String!
+  description: String!
+  salary: JobSalary
+  equity: String
+  city: String!
+  country: String!
+  workMode: JobWorkMode
+  startup: Startup @belongsTo(references: ["startupId"])
+  jobApplications: [JobApplication] @hasMany(references: ["jobId"])
+}
+
+type Investment @model @auth(rules: [{allow: public, provider: iam, operations: [read]},
+  {allow: owner, ownerField: "owner"}])
+{
+  id: ID! @primaryKey
+  startupId: ID
+  startupName: String!
+  sector: String!
+  stage: String!
+  investmentAmount: Int!
+  equity: Float!
+  date: String!
+  status: InvestmentStatus
+  currentValue: Int!
+  gain: Float!
+  location: String!
+  description: String!
+  tags: [String]!
+  investorId: ID
+  investor: Investor @belongsTo(references: ["investorId"])
+  startup: Startup @belongsTo(references: ["startupId"])
+}
+
+type Comment @model @auth(rules: [{allow: public, provider: iam, operations: [read]},
+  {allow: owner, ownerField: "owner"}])
+{
+  id: ID! @primaryKey
+  userId: ID
+  startupId: ID
+  content: String!
+  timestamp: String!
+  likes: Int!
+  startup: Startup @belongsTo(references: ["startupId"])
+  user: User @belongsTo(references: ["userId"])
+}
+
+type JobApplication @model @auth(rules: [{allow: public, provider: iam, operations: [read]},
+  {allow: owner, ownerField: "owner"}])
+{
+  id: ID! @primaryKey
+  jobId: ID
+  applicantId: ID
+  status: JobApplicationStatus
+  workMode: JobApplicationWorkMode
+  job: Job @belongsTo(references: ["jobId"])
+  applicant: JobSeeker @belongsTo(references: ["applicantId"])
+}
+
+type User @model @auth(rules: [{allow: public, provider: iam, operations: [read]},
+  {allow: owner, ownerField: "owner"}])
+{
+  id: ID! @primaryKey
+  email: String!
+  name: String!
+  role: UserRole
+  onboardingComplete: Boolean!
+  city: String
+  country: String
+  phone: String
+  linkedin: String
+  bio: String
+  portfolio: String
+  startups: Startup @hasOne(references: ["founderId"])
+  jobSeekers: JobSeeker @hasOne(references: ["userId"])
+  investors: Investor @hasOne(references: ["userId"])
+  comments: [Comment] @hasMany(references: ["userId"])
+}
+
+type Education @model @auth(rules: [{allow: public, provider: iam, operations: [read]},
+  {allow: owner, ownerField: "owner"}])
+{
+  jobSeekerId: ID
+  jobSeeker: JobSeeker @belongsTo(references: ["jobSeekerId"])
+  degree: String
+  fieldOfStudy: String
+  institution: String
+  graduationYear: String
+  gpa: String
+}
+
+type Experience @model @auth(rules: [{allow: public, provider: iam, operations: [read]},
+  {allow: owner, ownerField: "owner"}])
+{
+  jobSeekerId: ID
+  jobSeeker: JobSeeker @belongsTo(references: ["jobSeekerId"])
+  company: String
+  position: String
+  startDate: String
+  endDate: String
+  description: String
+}
+
+type JobSeeker @model @auth(rules: [{allow: public, provider: iam, operations: [read]},
+  {allow: owner, ownerField: "owner"}])
+{
+  id: ID! @primaryKey
+  userId: ID
+  desiredSalary: Int!
+  skills: [String]!
+  education: [Education] @hasMany(references: ["jobSeekerId"])
+  experience: [Experience] @hasMany(references: ["jobSeekerId"])
+  certifications: [String]!
+  languages: [String]!
+  user: User @belongsTo(references: ["userId"])
+  jobApplications: [JobApplication] @hasMany(references: ["applicantId"])
+}
+
+type Investor @model @auth(rules: [{allow: public, provider: iam, operations: [read]},
+  {allow: owner, ownerField: "owner"}])
+{
+  id: ID! @primaryKey
+  userId: ID
+  investmentRange: String!
+  sectors: [String]!
+  investments: [Investment] @hasMany(references: ["investorId"])
+  user: User @belongsTo(references: ["userId"])
+}
+
+enum StartupType {
+  research
+  profit
+  nonprofit
+}
+
+enum StartupHiringStatus {
+  urgent
+  open
+  nothiring
+}
+
+type JobSalary 
+{
+  min: Int!
+  max: Int
+}
+
+enum JobWorkMode {
+  onsite
+  remote
+  hybrid
+}
+
+enum InvestmentStatus {
+  active
+  exited
+  writtenoff
+}
+
+enum JobApplicationStatus {
+  pending
+  reviewed
+  interviewed
+  accepted
+  rejected
+}
+
+enum JobApplicationWorkMode {
+  onsite
+  remote
+  hybrid
+}
+
+enum UserRole {
+  startup
+  investor
+  job_seeker
+}

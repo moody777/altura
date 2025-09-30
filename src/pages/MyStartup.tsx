@@ -25,11 +25,11 @@ import {
 
 const MyStartup: React.FC = () => {
   const { user } = useAuth();
-  const { startups, jobs, createJob, applications, updateApplicationStatus } = useData();
+  const { startups, jobs, createJob, jobApplications, updateApplicationStatus } = useData();
   const { addNotification } = useNotifications();
   
   // Find user's startup
-  const userStartup = startups.find(s => s.founderId === user?.id);
+  const userStartup = (startups || []).find(s => s.founderId === user?.id);
   
   // State for forms and modals
   const [showJobForm, setShowJobForm] = useState(false);
@@ -265,7 +265,7 @@ const MyStartup: React.FC = () => {
     setShowEditJob(false);
   };
 
-  const startupJobs = jobs.filter(j => j.startupId === userStartup?.id);
+  const startupJobs = (jobs || []).filter(j => j.startupId === userStartup?.id);
 
   // Chat functions
   const handleSendMessage = async (e: React.FormEvent) => {
@@ -430,11 +430,11 @@ const MyStartup: React.FC = () => {
                           <h3 className="text-lg font-semibold text-white mb-2">{job.title}</h3>
                           <div className="flex items-center space-x-4 text-sm text-gray-300 mb-3">
                             <span>
-                              ${job.salary.min.toLocaleString()}
-                              {job.salary.max > 0 && ` - $${job.salary.max.toLocaleString()}`}
+                              ${job.salary?.min?.toLocaleString() || '0'}
+                              {job.salary?.max && job.salary.max > 0 && ` - $${job.salary.max.toLocaleString()}`}
                             </span>
                             {job.equity && <span>{job.equity} equity</span>}
-                            <span>{job.location}</span>
+                            <span>{job.city}, {job.country}</span>
                             <span className={`px-2 py-1 rounded border ${
                               (job as any).workMode === 'remote' ? 'bg-green-900/50 text-green-300 border-green-700' :
                               (job as any).workMode === 'hybrid' ? 'bg-blue-900/50 text-blue-300 border-blue-700' :
@@ -446,14 +446,9 @@ const MyStartup: React.FC = () => {
                           </div>
                           <p className="text-gray-300 text-sm mb-4">{job.description}</p>
                           <div className="flex flex-wrap gap-2">
-                            {job.skills.map((skill, index) => (
-                              <span
-                                key={index}
-                                className="px-2 py-1 bg-gray-700 text-gray-300 rounded text-xs border border-gray-600"
-                              >
-                                {skill}
+                            <span className="px-2 py-1 bg-gray-700 text-gray-300 rounded text-xs border border-gray-600">
+                              Skills will be extracted from description
                               </span>
-                            ))}
                           </div>
                         </div>
                         <div className="flex items-center space-x-2 ml-4">
@@ -472,7 +467,7 @@ const MyStartup: React.FC = () => {
                             <Edit className="w-4 h-4" />
                           </button>
                           <button 
-                            onClick={() => handleDeleteJob(job.id)}
+                            onClick={() => handleDeleteJob(job.id || '')}
                             className="p-2 text-gray-400 hover:text-red-400 transition-colors"
                             title="Delete Job"
                           >
@@ -507,11 +502,11 @@ const MyStartup: React.FC = () => {
               <div className="space-y-3">
                 <div className="flex items-center space-x-3">
                   <MapPin className="w-4 h-4 text-gray-400" />
-                  <span className="text-gray-300">{userStartup.location.city}, {userStartup.location.country}</span>
+                  <span className="text-gray-300">{userStartup.city}, {userStartup.country}</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <TrendingUp className="w-4 h-4 text-gray-400" />
-                  <span className="text-gray-300 capitalize">{userStartup.type.replace('-', ' ')}</span>
+                  <span className="text-gray-300 capitalize">{(userStartup.type || '').replace('-', ' ')}</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <Building className="w-4 h-4 text-gray-400" />
@@ -833,81 +828,55 @@ const MyStartup: React.FC = () => {
             <div className="p-6">
               {/* Applications data */}
               <div className="space-y-4">
-                {applications.map((application) => (
+                {(jobApplications || []).map((application) => (
                   <div key={application.id} className="border border-gray-600 rounded-lg p-6 hover:bg-gray-700/30 transition-colors">
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <div className="flex items-center space-x-4 mb-3">
                           <div className="w-12 h-12 bg-gradient-to-br from-[#B8860B] to-[#A67C00] rounded-lg flex items-center justify-center text-white font-bold">
-                            {application.applicantName.split(' ').map(n => n[0]).join('')}
+                            {(application.applicantId || 'A').charAt(0).toUpperCase()}
                           </div>
                           <div>
-                            <h3 className="text-lg font-semibold text-white">{application.applicantName}</h3>
-                            <p className="text-gray-300 text-sm">{application.email}</p>
+                            <h3 className="text-lg font-semibold text-white">Applicant {application.applicantId}</h3>
+                            <p className="text-gray-300 text-sm">Job ID: {application.jobId}</p>
                           </div>
                         </div>
                         
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                           <div>
-                            <span className="text-gray-400 text-sm">Experience</span>
-                            <p className="text-white font-medium">{application.experience}</p>
+                            <span className="text-gray-400 text-sm">Work Mode</span>
+                            <p className="text-white font-medium capitalize">{application.workMode}</p>
                           </div>
                           <div>
-                            <span className="text-gray-400 text-sm">Applied</span>
-                            <p className="text-white font-medium">{new Date(application.appliedDate).toLocaleDateString()}</p>
+                            <span className="text-gray-400 text-sm">Match Score</span>
+                            <p className="text-white font-medium">95%</p>
                           </div>
                           <div>
                             <span className="text-gray-400 text-sm">Status</span>
                             <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                              application.status === 'pending' ? 'bg-yellow-900/50 text-yellow-300 border border-yellow-700' :
-                              application.status === 'reviewed' ? 'bg-blue-900/50 text-blue-300 border border-blue-700' :
-                              application.status === 'interviewed' ? 'bg-green-900/50 text-green-300 border border-green-700' :
+                              (application.status || 'pending') === 'pending' ? 'bg-yellow-900/50 text-yellow-300 border border-yellow-700' :
+                              (application.status || 'pending') === 'reviewed' ? 'bg-blue-900/50 text-blue-300 border border-blue-700' :
+                              (application.status || 'pending') === 'interviewed' ? 'bg-green-900/50 text-green-300 border border-green-700' :
                               'bg-gray-800 text-gray-300 border border-gray-600'
                             }`}>
-                              {application.status.charAt(0).toUpperCase() + application.status.slice(1)}
+                              {(application.status || 'pending').charAt(0).toUpperCase() + (application.status || 'pending').slice(1)}
                             </span>
                           </div>
                         </div>
 
                         <div className="mb-4">
-                          <span className="text-gray-400 text-sm">Skills</span>
-                          <div className="flex flex-wrap gap-2 mt-1">
-                            {application.skills.map((skill, index) => (
-                              <span
-                                key={index}
-                                className="px-2 py-1 bg-gray-700 text-gray-300 rounded text-xs border border-gray-600"
-                              >
-                                {skill}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-
-                        <div className="mb-4">
-                          <span className="text-gray-400 text-sm">Cover Letter</span>
+                          <span className="text-gray-400 text-sm">Description</span>
                           <p className="text-gray-300 text-sm mt-1 leading-relaxed">
-                            {application.description}
+                            Application details will be shown here
                           </p>
-                        </div>
-
-                        <div className="flex items-center space-x-4">
-                          <a
-                            href={`#${application.resume}`}
-                            className="text-[#B8860B] hover:text-[#A67C00] transition-colors text-sm font-medium"
-                          >
-                            📄 View Resume
-                          </a>
-                          <button className="text-[#B8860B] hover:text-[#A67C00] transition-colors text-sm font-medium">
-                            💬 Contact
-                          </button>
                         </div>
                       </div>
 
                       <div className="flex flex-col space-y-2 ml-4">
                         <select
-                          value={application.status}
+                          value={application.status || 'pending'}
                           onChange={(e) => {
-                            handleUpdateApplicationStatus(application.id, e.target.value);
+                            handleUpdateApplicationStatus(application.id || '', e.target.value);
                           }}
                           className="px-3 py-1 bg-gray-700 border border-gray-600 rounded text-white text-sm focus:ring-2 focus:ring-[#B8860B] focus:border-transparent"
                         >
@@ -923,7 +892,7 @@ const MyStartup: React.FC = () => {
                 ))}
               </div>
 
-              {applications.length === 0 && (
+              {(jobApplications || []).length === 0 && (
                 <div className="text-center py-8">
                   <Briefcase className="w-12 h-12 text-gray-400 mx-auto mb-4" />
                   <h3 className="text-lg font-semibold text-white mb-2">No applications yet</h3>

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-
+import { signUp as amplifySignUp, signIn as amplifySignIn, signOut as amplifySignOut, confirmSignUp as amplifyConfirmSignUp } from "aws-amplify/auth";
 export type UserRole = 'startup' | 'investor' | 'job_seeker';
 
 export interface User {
@@ -8,12 +8,12 @@ export interface User {
   name: string;
   role?: UserRole;
   onboardingComplete: boolean;
-  avatar?: string;
-  location?: {
-    city: string;
-    country: string;
-    coordinates?: [number, number];
-  };
+  city?: string;
+  country?: string;
+  phone?: string;
+  linkedin?: string;
+  bio?: string;
+  portfolio?: string;
 }
 
 interface AuthContextType {
@@ -21,6 +21,7 @@ interface AuthContextType {
   loading: boolean;
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string, name: string) => Promise<void>;
+  confirmSignUp: (email: string, confirmationCode: string) => Promise<void>;
   signOut: () => Promise<void>;
   updateUser: (updates: Partial<User>) => Promise<void>;
 }
@@ -38,7 +39,7 @@ export const useAuth = () => {
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-
+  const [tempUser, setTempUser] = useState<User | null>(null);
   useEffect(() => {
     // Simulate checking for existing session
     const checkAuth = () => {
@@ -55,43 +56,97 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signIn = async (email: string, _password: string) => {
     setLoading(true);
     
-    // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Mock user - in real app, this would come from Cognito/Supabase
-    const mockUser: User = {
-      id: 'user-123',
-      email,
-      name: email.split('@')[0],
-      onboardingComplete: false
-    };
-    
-    setUser(mockUser);
-    localStorage.setItem('user', JSON.stringify(mockUser));
-    setLoading(false);
+    try {
+      await amplifySignIn({
+        username: email,
+        password: _password,
+      });
+      
+      // Create a mock user object since we're not using real user data
+      const mockUser: User = {
+        id: `user-${Date.now()}`,
+        email: email,
+        name: email.split('@')[0],
+        onboardingComplete: false,
+      };
+      
+      setUser(mockUser);
+      localStorage.setItem('user', JSON.stringify(mockUser));
+    } catch (error) {
+      console.error('Sign in failed:', error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
   };
 
   const signUp = async (email: string, _password: string, name: string) => {
     setLoading(true);
     
-    // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    try {
+      await amplifySignUp({
+        username: email,
+        password: _password,
+        options: {
+          userAttributes: {
+            email: email, 
+          },
+        },
+      });
+      
+      // Create a mock user object
+      const mockUser: User = {
+        id: `user-${Date.now()}`,
+        email: email,
+        name: name,
+        onboardingComplete: false,
+      };
+      setTempUser(mockUser);
+    } catch (error) {
+      console.error('Sign up failed:', error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+  const confirmSignUp = async (email: string, confirmationCode: string) => {
+    setLoading(true);
     
-    const mockUser: User = {
-      id: `user-${Date.now()}`,
-      email,
-      name,
-      onboardingComplete: false
-    };
-    
-    setUser(mockUser);
-    localStorage.setItem('user', JSON.stringify(mockUser));
-    setLoading(false);
+    try {
+      const { isSignUpComplete, nextStep } = await amplifyConfirmSignUp({
+        username: email,
+        confirmationCode: confirmationCode
+      });
+      
+      if (isSignUpComplete) {
+        // Create a mock user object after successful confirmation
+        
+      setUser(tempUser);
+       localStorage.setItem('user', JSON.stringify(tempUser));
+      } else {
+        // Handle additional steps if needed
+        console.log('Additional steps required:', nextStep);
+        throw new Error('Additional verification steps required');
+      }
+    } catch (error) {
+      console.error('Sign up confirmation failed:', error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
   };
 
   const signOut = async () => {
-    setUser(null);
-    localStorage.removeItem('user');
+    try {
+      await amplifySignOut();
+      setUser(null);
+      localStorage.removeItem('user');
+    } catch (error) {
+      console.error('Sign out failed:', error);
+      throw error;
+    }
   };
 
   const updateUser = async (updates: Partial<User>) => {
@@ -108,6 +163,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       loading,
       signIn,
       signUp,
+      confirmSignUp,
       signOut,
       updateUser
     }}>
