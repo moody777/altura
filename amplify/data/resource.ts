@@ -1,12 +1,14 @@
 import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
+import { recommendationFunctionHandler } from "../functions/recommendation/resource";
 
-const schem = a.schema({ 
+const schema = a.schema({ 
   Todo: a
     .model({
+      id: a.string().required(),
       content: a.string(),
     }),
     Startup:a.model({
-      id: a.id(),
+      id: a.string().required(),
       name: a.string().required(),
       description: a.string().required(),
       logo: a.string(),
@@ -18,7 +20,7 @@ const schem = a.schema({
       teamSize: a.string().required(),
       fundingNeeds: a.string(),
       hiringStatus: a.enum(['urgent' , 'open' , 'nothiring']),
-      founderId: a.id(),
+      founderId: a.string().required(),
       website: a.string(),
       likes: a.integer(),
       commentsNo: a.integer(),
@@ -28,9 +30,9 @@ const schem = a.schema({
       comments: a.hasMany('Comment','startupId'),
     }),
     Job:a.model({
-      id: a.id(),
+      id: a.string().required(),
       owner: a.string(),
-      startupId: a.id(),
+      startupId: a.string().required(),
       title: a.string().required(),
       description: a.string().required(),
       salary: a.customType({
@@ -45,8 +47,8 @@ const schem = a.schema({
       jobApplications: a.hasMany('JobApplication','jobId'),
     }),
     Investment:a.model({
-      id: a.id(),
-      startupId: a.id(),
+      id: a.string().required(),
+      startupId: a.string().required(),
       startupName: a.string().required(),
       sector: a.string().required(),
       stage: a.string().required(),
@@ -60,15 +62,15 @@ const schem = a.schema({
       location: a.string().required(),
       description: a.string().required(),
       tags: a.string().array().required(),
-      investorId: a.id(),
+      investorId: a.string().required(),
       investor: a.belongsTo('Investor','investorId'),
       startup: a.belongsTo('Startup','startupId'),      
     }),
     Comment:a.model({
-      id: a.id(),
+      id: a.string().required(),
       owner: a.string(),
-      userId: a.id(),
-      startupId: a.id(),
+      userId: a.string().required(),
+      startupId: a.string().required(),
       content: a.string().required(),
       timestamp: a.string().required(),
       likes: a.integer().required(),
@@ -76,10 +78,10 @@ const schem = a.schema({
       user: a.belongsTo('User','userId'),
     }),
     JobApplication:a.model({
-      id: a.id(),
-      jobId: a.id(),
+      id: a.string().required(),
+      jobId: a.string().required(),
       owner: a.string(),
-      applicantId: a.id(),
+      applicantId: a.string().required(),
       status: a.enum(['pending' , 'reviewed' , 'interviewed' , 'accepted' , 'rejected']),
       workMode: a.enum(['onsite' , 'remote' , 'hybrid']),
       job: a.belongsTo('Job','jobId'),
@@ -87,7 +89,7 @@ const schem = a.schema({
       
     }),
     User:a.model({
-      id: a.id(),
+      id: a.string().required(),
       email: a.string().required(),
       name: a.string().required(),
       role: a.enum(['startup', 'investor', 'job_seeker']),
@@ -105,7 +107,8 @@ const schem = a.schema({
       comments: a.hasMany('Comment','userId'),
     }),
     Education: a.model({
-      jobSeekerId: a.id(),
+      id: a.string().required(),
+      jobSeekerId: a.string().required(),
       jobSeeker: a.belongsTo('JobSeeker','jobSeekerId'),
       degree: a.string(),
       owner: a.string(),
@@ -115,7 +118,8 @@ const schem = a.schema({
       gpa: a.string()
     }),
     Experience: a.model({
-      jobSeekerId: a.id(),
+      id: a.string().required(),
+      jobSeekerId: a.string().required(),
       jobSeeker: a.belongsTo('JobSeeker','jobSeekerId'),
       company: a.string(),
       owner: a.string(),
@@ -125,8 +129,8 @@ const schem = a.schema({
       description: a.string(),
     }),
     JobSeeker:a.model({
-      id: a.id(),
-      userId: a.id(),
+      id: a.string().required(),
+      userId: a.string().required(),
       owner: a.string(),
       desiredSalary: a.integer().required(),
       skills: a.string().array().required(),
@@ -138,21 +142,31 @@ const schem = a.schema({
       jobApplications: a.hasMany('JobApplication','applicantId'),
     }),
     Investor:a.model({
-      id: a.id(),
-      userId: a.id(),
+      id: a.string().required(),
+      userId: a.string().required(),
       owner: a.string(),
       investmentRange: a.string().required(),
       sectors: a.string().array().required(),
       investments: a.hasMany('Investment','investorId'),
       user: a.belongsTo('User','userId'),
     }),
-
+    Recommendations:  a.query().arguments({
+      text: a.string(),
+      indexName: a.string(),
+      })
+      .returns(a.json())
+      .handler(a.handler.function(recommendationFunctionHandler)),
     
   }).authorization((allow) => [
-    allow.guest().to(['read']),
-    allow.owner(),
+    allow.publicApiKey(),
   ]);
-export const schema = defineData({schema: schem});
-export type Schema = ClientSchema<typeof schem>;
+  
+export const data = defineData({
+    schema,
+    authorizationModes: {
+      defaultAuthorizationMode: 'apiKey',
+    },
+  });
+export type Schema = ClientSchema<typeof schema>;
 
 

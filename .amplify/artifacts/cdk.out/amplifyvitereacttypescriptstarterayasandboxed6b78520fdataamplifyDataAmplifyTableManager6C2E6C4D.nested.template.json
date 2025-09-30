@@ -445,6 +445,8 @@
    "Properties": {
     "Analytics": "v2:deflate64:H4sIAAAAAAAA/zWNywqDMBBFv8V9nPqg0G0tdFmKfoCMcSqjMQEnVkrw34vars65nMXNIEsvkES4SKzbITbcQHiQeGorj3pQuEgdGEcIpTOkbi+78+kM6882D1uVwbFpEcJ9ttqzs1v7+6okr1GEvMB1g5IcilkP5AsUWlVJ4uZJk9pr5bFj2+1nv7Aq61qCXk7vLIP0DEnUC3M8zdbzSFAe/AJbcKFWzwAAAA=="
    },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
    "Metadata": {
     "aws:cdk:path": "amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/AmplifyTableManager/CDKMetadata/Default"
    },

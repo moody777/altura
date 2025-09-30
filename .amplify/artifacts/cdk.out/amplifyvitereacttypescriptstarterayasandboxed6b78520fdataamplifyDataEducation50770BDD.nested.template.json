@@ -635,6 +635,28 @@
     "aws:cdk:path": "amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Education/EducationDataSource/Resource"
    }
   },
+  "QuerygetEducationpreAuth0FunctionQuerygetEducationpreAuth0FunctionAppSyncFunction7E698C2D": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyvitereacttypescriptstarterayasandboxed6b78520fdataamplifyDataGraphQLAPI74BFAFDCApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyvitereacttypescriptstarterayasandboxed6b78520fdataamplifyDataGraphQLAPINONEDSD317AB56Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerygetEducationpreAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/ffc597e18023b530e6afcbe02cee647d49550fa9e77bd06f1dee09d8b1be8de3.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Education/QuerygetEducationpreAuth0Function/QuerygetEducationpreAuth0Function.AppSyncFunction"
+   }
+  },
   "QuerygetEducationauth0FunctionQuerygetEducationauth0FunctionAppSyncFunctionE027104F": {
    "Type": "AWS::AppSync::FunctionConfiguration",
    "Properties": {
@@ -647,7 +669,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "QuerygetEducationauth0Function",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/3c5db86226e3c5115bc7936bcbb927a4d68c47edd313e6b4957cdcb8f115b7ec.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/0224a3e5097427da3f4460b5d6d2b86ad4195c9cb8da7bc13e7187eead1c3ae3.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
@@ -719,6 +741,12 @@
     "Kind": "PIPELINE",
     "PipelineConfig": {
      "Functions": [
+      {
+       "Fn::GetAtt": [
+        "QuerygetEducationpreAuth0FunctionQuerygetEducationpreAuth0FunctionAppSyncFunction7E698C2D",
+        "FunctionId"
+       ]
+      },
       {
        "Fn::GetAtt": [
         "QuerygetEducationauth0FunctionQuerygetEducationauth0FunctionAppSyncFunctionE027104F",
@@ -815,6 +843,28 @@
     "aws:cdk:path": "amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Education/queryGetEducationResolver"
    }
   },
+  "QuerylistEducationspreAuth0FunctionQuerylistEducationspreAuth0FunctionAppSyncFunction77FE9ACF": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyvitereacttypescriptstarterayasandboxed6b78520fdataamplifyDataGraphQLAPI74BFAFDCApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyvitereacttypescriptstarterayasandboxed6b78520fdataamplifyDataGraphQLAPINONEDSD317AB56Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerylistEducationspreAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/3e81312d4c75951808eda9fcd5f854c1925c0b819de0939f09c4fe2eebb190b8.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Education/QuerylistEducationspreAuth0Function/QuerylistEducationspreAuth0Function.AppSyncFunction"
+   }
+  },
   "QuerylistEducationsauth0FunctionQuerylistEducationsauth0FunctionAppSyncFunction754B5CF9": {
    "Type": "AWS::AppSync::FunctionConfiguration",
    "Properties": {
@@ -827,7 +877,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "QuerylistEducationsauth0Function",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/3c5db86226e3c5115bc7936bcbb927a4d68c47edd313e6b4957cdcb8f115b7ec.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/0224a3e5097427da3f4460b5d6d2b86ad4195c9cb8da7bc13e7187eead1c3ae3.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
@@ -899,6 +949,12 @@
     "Kind": "PIPELINE",
     "PipelineConfig": {
      "Functions": [
+      {
+       "Fn::GetAtt": [
+        "QuerylistEducationspreAuth0FunctionQuerylistEducationspreAuth0FunctionAppSyncFunction77FE9ACF",
+        "FunctionId"
+       ]
+      },
       {
        "Fn::GetAtt": [
         "QuerylistEducationsauth0FunctionQuerylistEducationsauth0FunctionAppSyncFunction754B5CF9",
@@ -1017,6 +1073,28 @@
     "aws:cdk:path": "amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Education/MutationcreateEducationinit0Function/MutationcreateEducationinit0Function.AppSyncFunction"
    }
   },
+  "MutationcreateEducationpreAuth0FunctionMutationcreateEducationpreAuth0FunctionAppSyncFunction3B3FB693": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyvitereacttypescriptstarterayasandboxed6b78520fdataamplifyDataGraphQLAPI74BFAFDCApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyvitereacttypescriptstarterayasandboxed6b78520fdataamplifyDataGraphQLAPINONEDSD317AB56Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationcreateEducationpreAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/39fb35c6f8e8573ffe3a63ba867cf543b05af129a104b387a44f03c3d85da0c3.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Education/MutationcreateEducationpreAuth0Function/MutationcreateEducationpreAuth0Function.AppSyncFunction"
+   }
+  },
   "MutationcreateEducationauth0FunctionMutationcreateEducationauth0FunctionAppSyncFunctionCD0388EA": {
    "Type": "AWS::AppSync::FunctionConfiguration",
    "Properties": {
@@ -1029,7 +1107,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "MutationcreateEducationauth0Function",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/78590797dbbb9c4e9c46f8819a3fb8470311389c224a941d0777dd188e0b1b10.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/d637c1fb7301003b8a5ada269338cf2e8df6cc0dc412ef13acc6158d680b6d3e.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
@@ -1104,6 +1182,12 @@
       {
        "Fn::GetAtt": [
         "MutationcreateEducationinit0FunctionMutationcreateEducationinit0FunctionAppSyncFunction85BA778D",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationcreateEducationpreAuth0FunctionMutationcreateEducationpreAuth0FunctionAppSyncFunction3B3FB693",
         "FunctionId"
        ]
       },
@@ -1225,6 +1309,28 @@
     "aws:cdk:path": "amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Education/MutationupdateEducationinit0Function/MutationupdateEducationinit0Function.AppSyncFunction"
    }
   },
+  "MutationupdateEducationpreAuth0FunctionMutationupdateEducationpreAuth0FunctionAppSyncFunctionFCE6CF94": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyvitereacttypescriptstarterayasandboxed6b78520fdataamplifyDataGraphQLAPI74BFAFDCApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyvitereacttypescriptstarterayasandboxed6b78520fdataamplifyDataGraphQLAPINONEDSD317AB56Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationupdateEducationpreAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/39fb35c6f8e8573ffe3a63ba867cf543b05af129a104b387a44f03c3d85da0c3.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Education/MutationupdateEducationpreAuth0Function/MutationupdateEducationpreAuth0Function.AppSyncFunction"
+   }
+  },
   "MutationupdateEducationauth0FunctionMutationupdateEducationauth0FunctionAppSyncFunctionD68D25CC": {
    "Type": "AWS::AppSync::FunctionConfiguration",
    "Properties": {
@@ -1243,7 +1349,7 @@
      "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/1f5fed297da9c32ae3af922bf3a38ccf23b956078887d16891ec06c20c64722c.vtl"
     },
     "ResponseMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/64513404c6860cf60b9b57ac7c1d67a3099cf0c4d67008d43da25afa457aa443.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/89f92efd98b1034df0e2497fe31a97de6975de554b8a22e0677d05d6efcafa59.vtl"
     }
    },
    "DependsOn": [
@@ -1320,6 +1426,12 @@
       {
        "Fn::GetAtt": [
         "MutationupdateEducationinit0FunctionMutationupdateEducationinit0FunctionAppSyncFunction13EEFCA0",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationupdateEducationpreAuth0FunctionMutationupdateEducationpreAuth0FunctionAppSyncFunctionFCE6CF94",
         "FunctionId"
        ]
       },
@@ -1419,6 +1531,28 @@
     "aws:cdk:path": "amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Education/mutationUpdateEducationResolver"
    }
   },
+  "MutationdeleteEducationpreAuth0FunctionMutationdeleteEducationpreAuth0FunctionAppSyncFunctionC49911A7": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyvitereacttypescriptstarterayasandboxed6b78520fdataamplifyDataGraphQLAPI74BFAFDCApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyvitereacttypescriptstarterayasandboxed6b78520fdataamplifyDataGraphQLAPINONEDSD317AB56Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationdeleteEducationpreAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/a2c0f8a4d76f659d130c8a445801845ae9d33e5cc2c5ecd610edc272d4bd46e3.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Education/MutationdeleteEducationpreAuth0Function/MutationdeleteEducationpreAuth0Function.AppSyncFunction"
+   }
+  },
   "MutationdeleteEducationauth0FunctionMutationdeleteEducationauth0FunctionAppSyncFunction5FFB8039": {
    "Type": "AWS::AppSync::FunctionConfiguration",
    "Properties": {
@@ -1437,7 +1571,7 @@
      "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/1f5fed297da9c32ae3af922bf3a38ccf23b956078887d16891ec06c20c64722c.vtl"
     },
     "ResponseMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/867fb7d7eb8e4127b6d0136b82c5c3f74a52eb410297086859986f8e7e4b02aa.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e3416b4d47414f29c21e59a70e83bddb959ef0625854ed7fb0ca376573e99069.vtl"
     }
    },
    "DependsOn": [
@@ -1511,6 +1645,12 @@
     "Kind": "PIPELINE",
     "PipelineConfig": {
      "Functions": [
+      {
+       "Fn::GetAtt": [
+        "MutationdeleteEducationpreAuth0FunctionMutationdeleteEducationpreAuth0FunctionAppSyncFunctionC49911A7",
+        "FunctionId"
+       ]
+      },
       {
        "Fn::GetAtt": [
         "MutationdeleteEducationauth0FunctionMutationdeleteEducationauth0FunctionAppSyncFunction5FFB8039",
@@ -1619,7 +1759,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "SubscriptiononCreateEducationauth0Function",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/0e7077aa6609dffb9695a65880eced44054943cde3a52ceed86fc06b64cdd178.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e6da5a6e993df8b5fdc91086b71eb53e72a3a97c98836ef9c9257776f36c452b.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
@@ -1766,7 +1906,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "SubscriptiononUpdateEducationauth0Function",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/0e7077aa6609dffb9695a65880eced44054943cde3a52ceed86fc06b64cdd178.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e6da5a6e993df8b5fdc91086b71eb53e72a3a97c98836ef9c9257776f36c452b.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
@@ -1913,7 +2053,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "SubscriptiononDeleteEducationauth0Function",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/0e7077aa6609dffb9695a65880eced44054943cde3a52ceed86fc06b64cdd178.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e6da5a6e993df8b5fdc91086b71eb53e72a3a97c98836ef9c9257776f36c452b.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
@@ -2048,102 +2188,13 @@
     "aws:cdk:path": "amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Education/subscriptionOnDeleteEducationResolver"
    }
   },
-  "EducationOwnerDataResolverFnEducationOwnerDataResolverFnAppSyncFunction4A860C95": {
-   "Type": "AWS::AppSync::FunctionConfiguration",
-   "Properties": {
-    "ApiId": {
-     "Ref": "referencetoamplifyvitereacttypescriptstarterayasandboxed6b78520fdataamplifyDataGraphQLAPI74BFAFDCApiId"
-    },
-    "DataSourceName": {
-     "Ref": "referencetoamplifyvitereacttypescriptstarterayasandboxed6b78520fdataamplifyDataGraphQLAPINONEDSD317AB56Name"
-    },
-    "FunctionVersion": "2018-05-29",
-    "Name": "EducationOwnerDataResolverFn",
-    "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/041534e5fd916595f752318f161512d7c7f83b9f2cf32d0f0be381c12253ff68.vtl"
-    },
-    "ResponseMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/064303962e481067b44300212516363b99aaee539b6bafaf756fdd83ff0b60f0.vtl"
-    }
-   },
-   "UpdateReplacePolicy": "Delete",
-   "DeletionPolicy": "Delete",
-   "Metadata": {
-    "aws:cdk:path": "amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Education/EducationOwnerDataResolverFn/EducationOwnerDataResolverFn.AppSyncFunction"
-   }
-  },
-  "EducationownerResolver": {
-   "Type": "AWS::AppSync::Resolver",
-   "Properties": {
-    "ApiId": {
-     "Ref": "referencetoamplifyvitereacttypescriptstarterayasandboxed6b78520fdataamplifyDataGraphQLAPI74BFAFDCApiId"
-    },
-    "FieldName": "owner",
-    "Kind": "PIPELINE",
-    "PipelineConfig": {
-     "Functions": [
-      {
-       "Fn::GetAtt": [
-        "EducationOwnerDataResolverFnEducationOwnerDataResolverFnAppSyncFunction4A860C95",
-        "FunctionId"
-       ]
-      }
-     ]
-    },
-    "RequestMappingTemplate": {
-     "Fn::Join": [
-      "",
-      [
-       "$util.qr($ctx.stash.put(\"typeName\", \"Education\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"owner\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
-       {
-        "Ref": "referencetoamplifyvitereacttypescriptstarterayasandboxed6b78520fdataamplifyDataGraphQLAPI74BFAFDCApiId"
-       },
-       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
-       {
-        "Ref": "AWS::Partition"
-       },
-       ":sts::",
-       {
-        "Ref": "AWS::AccountId"
-       },
-       ":assumed-role/",
-       {
-        "Ref": "referencetoamplifyvitereacttypescriptstarterayasandboxed6b78520fauthNestedStackauthNestedStackResourceF4965639Outputsamplifyvitereacttypescriptstarterayasandboxed6b78520fauthamplifyAuthauthenticatedUserRole3F907134Ref"
-       },
-       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
-       {
-        "Ref": "AWS::Partition"
-       },
-       ":sts::",
-       {
-        "Ref": "AWS::AccountId"
-       },
-       ":assumed-role/",
-       {
-        "Ref": "referencetoamplifyvitereacttypescriptstarterayasandboxed6b78520fauthNestedStackauthNestedStackResourceF4965639Outputsamplifyvitereacttypescriptstarterayasandboxed6b78520fauthamplifyAuthunauthenticatedUserRole6DC28432Ref"
-       },
-       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
-       {
-        "Ref": "referencetoamplifyvitereacttypescriptstarterayasandboxed6b78520fauthNestedStackauthNestedStackResourceF4965639Outputsamplifyvitereacttypescriptstarterayasandboxed6b78520fauthamplifyAuthIdentityPoolF6133989Ref"
-       },
-       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
-      ]
-     ]
-    },
-    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
-    "TypeName": "Education"
-   },
-   "UpdateReplacePolicy": "Delete",
-   "DeletionPolicy": "Delete",
-   "Metadata": {
-    "aws:cdk:path": "amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Education/educationOwnerResolver"
-   }
-  },
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
     "Analytics": "v2:deflate64:H4sIAAAAAAAA/1WOwWrDMAyGn6V3R2tTBruuKT1uI9m9KLYS3CRysOSWEvLuI+no2OnXhz6kP4d89wbbDd4ks67Lel/D9EGi5CpF25mi4S+MOJBSXKAI7Lz6wKYkCSlaMkUSDcMfNvyc8Sbnyd0Zh+Bq+Ma6pwMKGY8DTGXoH3boaTY4jnJnC9Nx1Y/1ERWr58n/dEpslxJF4Ma3KeLa6Pdzf6U4G9mfUYRU4H0JI3s4JNuRLgXmxf1MOiY167pSbD23s+HgCC7ycs1z2L3CdnMR77OYWP1AUD7yB/kBS+w2AQAA"
    },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
    "Metadata": {
     "aws:cdk:path": "amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Education/CDKMetadata/Default"
    },

@@ -22,7 +22,7 @@ import {
 
 const StartupDetail: React.FC = () => {
   const { id } = useParams();
-  const { startups, jobs, likeStartup, comments, addComment, likeComment, users, getUserById } = useData();
+  const { startups, jobs, likeStartup, comments, addComment, likeComment } = useData();
   const { user } = useAuth();
   const { addNotification } = useNotifications();
   
@@ -72,8 +72,8 @@ const StartupDetail: React.FC = () => {
     }
   };
 
-  const handleCommentLike = (commentId: string | number) => {
-    likeComment(String(commentId));
+  const handleCommentLike = (commentId: number) => {
+    likeComment(commentId);
   };
 
   if (!startup) {
@@ -118,7 +118,7 @@ const StartupDetail: React.FC = () => {
                     </div>
                     <div>
                       <h1 className="text-3xl font-bold text-white mb-1">{startup.name}</h1>
-                      <p className="text-lg text-gray-300">Founded by {getUserById(startup.founderId)?.name || 'Unknown'}</p>
+                      <p className="text-lg text-gray-300">Founded by {startup.founderId}</p>
                       <div className="flex items-center space-x-4 mt-2">
                         <span className="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm font-medium border border-blue-700">
                           {startup.type.charAt(0).toUpperCase() + startup.type.slice(1).replace('-', ' ')}
@@ -308,39 +308,32 @@ const StartupDetail: React.FC = () => {
 
                 {/* Comments List */}
                 <div className="space-y-6">
-                  {comments.map((comment) => {
-                    // Get user from database using userId
-                    const commentUser = getUserById(comment.userId);
-                    const userName = commentUser?.name || 'Anonymous';
-                    const userInitial = userName.charAt(0).toUpperCase();
-                    
-                    return (
-                      <div key={comment.id} className="flex space-x-4">
-                        <div className="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center text-gray-300 font-bold text-sm">
-                          {userInitial}
+                  {comments.map((comment) => (
+                    <div key={comment.id} className="flex space-x-4">
+                      <div className="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center text-gray-300 font-bold text-sm">
+                        {comment.user.charAt(0)}
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center space-x-2 mb-2">
+                          <h4 className="font-semibold text-white">{comment.user}</h4>
+                          <span className="text-gray-400 text-sm">{comment.timestamp}</span>
                         </div>
-                        <div className="flex-1">
-                          <div className="flex items-center space-x-2 mb-2">
-                            <h4 className="font-semibold text-white">{userName}</h4>
-                            <span className="text-gray-400 text-sm">{comment.timestamp}</span>
-                          </div>
-                          <p className="text-gray-300 mb-3">{comment.content}</p>
-                          <div className="flex items-center space-x-4">
-                            <button
-                              onClick={() => handleCommentLike(comment.id)}
-                              className="flex items-center space-x-1 text-gray-400 hover:text-[#B8860B] transition-colors"
-                            >
-                              <ThumbsUp className="w-4 h-4" />
-                              <span>{comment.likes}</span>
-                            </button>
-                            <button className="text-gray-400 hover:text-[#B8860B] transition-colors text-sm">
-                              Reply
-                            </button>
-                          </div>
+                        <p className="text-gray-300 mb-3">{comment.content}</p>
+                        <div className="flex items-center space-x-4">
+                          <button
+                            onClick={() => handleCommentLike(comment.id)}
+                            className="flex items-center space-x-1 text-gray-400 hover:text-[#B8860B] transition-colors"
+                          >
+                            <ThumbsUp className="w-4 h-4" />
+                            <span>{comment.likes}</span>
+                          </button>
+                          <button className="text-gray-400 hover:text-[#B8860B] transition-colors text-sm">
+                            Reply
+                          </button>
                         </div>
                       </div>
-                    );
-                  })}
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -353,23 +346,13 @@ const StartupDetail: React.FC = () => {
             <div className="bg-gray-800 rounded-2xl shadow-lg border border-gray-700 p-6">
               <h3 className="text-lg font-semibold text-white mb-4">Founder</h3>
               <div className="flex items-center space-x-3">
-                {(() => {
-                  const founder = getUserById(startup.founderId);
-                  const founderName = founder?.name || 'Unknown';
-                  const founderInitial = founderName.charAt(0).toUpperCase();
-                  
-                  return (
-                    <>
-                      <div className="w-12 h-12 bg-[#B8860B] rounded-full flex items-center justify-center text-white font-bold">
-                        {founderInitial}
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-white">{founderName}</h4>
-                        <p className="text-gray-400 text-sm">Founder & CEO</p>
-                      </div>
-                    </>
-                  );
-                })()}
+                <div className="w-12 h-12 bg-[#B8860B] rounded-full flex items-center justify-center text-white font-bold">
+                  {startup.founderId.charAt(0)}
+                </div>
+                <div>
+                  <h4 className="font-semibold text-white">{startup.founderId}</h4>
+                  <p className="text-gray-400 text-sm">Founder & CEO</p>
+                </div>
               </div>
             </div>
 
@@ -379,7 +362,7 @@ const StartupDetail: React.FC = () => {
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="text-gray-400">Founded</span>
-                  <span className="text-white font-semibold">2020</span>
+                  <span className="text-white font-semibold">2025</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-gray-400">Type</span>

@@ -22,7 +22,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/63be617fe00c71ae04274df8d1cb3f341c1a3e6b13e6cd0460fb9927b08e566c.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/58c53fe9576a23dd9e7fc8160b4c7d43e238f39ece9c375a77263d5f95353127.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -39,6 +39,19 @@
       ],
       "metadata": {
         "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f": [
+          {
+            "type": "aws:cdk:stack-tags",
+            "data": [
+              {
+                "Key": "amplify:deployment-type",
+                "Value": "sandbox"
+              },
+              {
+                "Key": "created-by",
+                "Value": "amplify"
+              }
+            ]
+          },
           {
             "type": "aws:cdk:stack-tags",
             "data": [
@@ -281,6 +294,12 @@
             "data": "amplifyDataGraphQLAPITransformerSchemaFF50A789"
           }
         ],
+        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/GraphQLAPI/DefaultApiKey": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataGraphQLAPIDefaultApiKey1C8ED374"
+          }
+        ],
         "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/GraphQLAPI/NONE_DS": [
           {
             "type": "graphqltransformer:resourceName",
@@ -489,6 +508,16 @@
             "data": "TodoTable"
           }
         ],
+        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Todo/QuerygetTodopreAuth0Function/QuerygetTodopreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetTodopreAuth0FunctionQuerygetTodopreAuth0FunctionAppSyncFunctionFFFAAF80"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetTodopreAuth0Function"
+          }
+        ],
         "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Todo/QuerygetTodoauth0Function/QuerygetTodoauth0Function.AppSyncFunction": [
           {
             "type": "aws:cdk:logicalId",
@@ -527,6 +556,16 @@
           {
             "type": "graphqltransformer:resourceName",
             "data": "Query.getTodo"
+          }
+        ],
+        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Todo/QuerylistTodospreAuth0Function/QuerylistTodospreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistTodospreAuth0FunctionQuerylistTodospreAuth0FunctionAppSyncFunctionD066FA43"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistTodospreAuth0Function"
           }
         ],
         "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Todo/QuerylistTodosauth0Function/QuerylistTodosauth0Function.AppSyncFunction": [
@@ -579,6 +618,16 @@
             "data": "MutationcreateTodoinit0Function"
           }
         ],
+        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Todo/MutationcreateTodopreAuth0Function/MutationcreateTodopreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateTodopreAuth0FunctionMutationcreateTodopreAuth0FunctionAppSyncFunctionFE4AC834"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateTodopreAuth0Function"
+          }
+        ],
         "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Todo/MutationcreateTodoauth0Function/MutationcreateTodoauth0Function.AppSyncFunction": [
           {
             "type": "aws:cdk:logicalId",
@@ -629,6 +678,16 @@
             "data": "MutationupdateTodoinit0Function"
           }
         ],
+        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Todo/MutationupdateTodopreAuth0Function/MutationupdateTodopreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateTodopreAuth0FunctionMutationupdateTodopreAuth0FunctionAppSyncFunction08B1C77D"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateTodopreAuth0Function"
+          }
+        ],
         "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Todo/MutationupdateTodoauth0Function/MutationupdateTodoauth0Function.AppSyncFunction": [
           {
             "type": "aws:cdk:logicalId",
@@ -667,6 +726,16 @@
           {
             "type": "graphqltransformer:resourceName",
             "data": "Mutation.updateTodo"
+          }
+        ],
+        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Todo/MutationdeleteTodopreAuth0Function/MutationdeleteTodopreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteTodopreAuth0FunctionMutationdeleteTodopreAuth0FunctionAppSyncFunctionDA33468D"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteTodopreAuth0Function"
           }
         ],
         "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Todo/MutationdeleteTodoauth0Function/MutationdeleteTodoauth0Function.AppSyncFunction": [
@@ -827,26 +896,6 @@
           {
             "type": "graphqltransformer:resourceName",
             "data": "Subscription.onDeleteTodo"
-          }
-        ],
-        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Todo/TodoOwnerDataResolverFn/TodoOwnerDataResolverFn.AppSyncFunction": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "TodoOwnerDataResolverFnTodoOwnerDataResolverFnAppSyncFunction0C7BF45B"
-          },
-          {
-            "type": "graphqltransformer:resourceName",
-            "data": "TodoOwnerDataResolverFn"
-          }
-        ],
-        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Todo/todoOwnerResolver": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "TodoownerResolver"
-          },
-          {
-            "type": "graphqltransformer:resourceName",
-            "data": "Todo.owner"
           }
         ],
         "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Todo/CDKMetadata/Default": [
@@ -1405,26 +1454,6 @@
           {
             "type": "graphqltransformer:resourceName",
             "data": "Subscription.onDeleteStartup"
-          }
-        ],
-        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Startup/StartupOwnerDataResolverFn/StartupOwnerDataResolverFn.AppSyncFunction": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "StartupOwnerDataResolverFnStartupOwnerDataResolverFnAppSyncFunction6E6BFF6D"
-          },
-          {
-            "type": "graphqltransformer:resourceName",
-            "data": "StartupOwnerDataResolverFn"
-          }
-        ],
-        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Startup/startupOwnerResolver": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "StartupownerResolver"
-          },
-          {
-            "type": "graphqltransformer:resourceName",
-            "data": "Startup.owner"
           }
         ],
         "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Startup/CDKMetadata/Default": [
@@ -1997,26 +2026,6 @@
             "data": "Subscription.onDeleteJob"
           }
         ],
-        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Job/JobOwnerDataResolverFn/JobOwnerDataResolverFn.AppSyncFunction": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "JobOwnerDataResolverFnJobOwnerDataResolverFnAppSyncFunctionAFCB4764"
-          },
-          {
-            "type": "graphqltransformer:resourceName",
-            "data": "JobOwnerDataResolverFn"
-          }
-        ],
-        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Job/jobOwnerResolver": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "JobownerResolver"
-          },
-          {
-            "type": "graphqltransformer:resourceName",
-            "data": "Job.owner"
-          }
-        ],
         "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Job/CDKMetadata/Default": [
           {
             "type": "aws:cdk:logicalId",
@@ -2585,26 +2594,6 @@
           {
             "type": "graphqltransformer:resourceName",
             "data": "Subscription.onDeleteInvestment"
-          }
-        ],
-        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Investment/InvestmentOwnerDataResolverFn/InvestmentOwnerDataResolverFn.AppSyncFunction": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "InvestmentOwnerDataResolverFnInvestmentOwnerDataResolverFnAppSyncFunctionC41B8F60"
-          },
-          {
-            "type": "graphqltransformer:resourceName",
-            "data": "InvestmentOwnerDataResolverFn"
-          }
-        ],
-        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Investment/investmentOwnerResolver": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "InvestmentownerResolver"
-          },
-          {
-            "type": "graphqltransformer:resourceName",
-            "data": "Investment.owner"
           }
         ],
         "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Investment/CDKMetadata/Default": [
@@ -3177,26 +3166,6 @@
             "data": "Subscription.onDeleteComment"
           }
         ],
-        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Comment/CommentOwnerDataResolverFn/CommentOwnerDataResolverFn.AppSyncFunction": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "CommentOwnerDataResolverFnCommentOwnerDataResolverFnAppSyncFunction7654336B"
-          },
-          {
-            "type": "graphqltransformer:resourceName",
-            "data": "CommentOwnerDataResolverFn"
-          }
-        ],
-        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Comment/commentOwnerResolver": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "CommentownerResolver"
-          },
-          {
-            "type": "graphqltransformer:resourceName",
-            "data": "Comment.owner"
-          }
-        ],
         "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Comment/CDKMetadata/Default": [
           {
             "type": "aws:cdk:logicalId",
@@ -3765,26 +3734,6 @@
           {
             "type": "graphqltransformer:resourceName",
             "data": "Subscription.onDeleteJobApplication"
-          }
-        ],
-        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/JobApplication/JobApplicationOwnerDataResolverFn/JobApplicationOwnerDataResolverFn.AppSyncFunction": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "JobApplicationOwnerDataResolverFnJobApplicationOwnerDataResolverFnAppSyncFunction92C24AB3"
-          },
-          {
-            "type": "graphqltransformer:resourceName",
-            "data": "JobApplicationOwnerDataResolverFn"
-          }
-        ],
-        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/JobApplication/jobApplicationOwnerResolver": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "JobApplicationownerResolver"
-          },
-          {
-            "type": "graphqltransformer:resourceName",
-            "data": "JobApplication.owner"
           }
         ],
         "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/JobApplication/CDKMetadata/Default": [
@@ -4357,26 +4306,6 @@
             "data": "Subscription.onDeleteUser"
           }
         ],
-        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/User/UserOwnerDataResolverFn/UserOwnerDataResolverFn.AppSyncFunction": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "UserOwnerDataResolverFnUserOwnerDataResolverFnAppSyncFunction78EE3B72"
-          },
-          {
-            "type": "graphqltransformer:resourceName",
-            "data": "UserOwnerDataResolverFn"
-          }
-        ],
-        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/User/userOwnerResolver": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "UserownerResolver"
-          },
-          {
-            "type": "graphqltransformer:resourceName",
-            "data": "User.owner"
-          }
-        ],
         "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/User/CDKMetadata/Default": [
           {
             "type": "aws:cdk:logicalId",
@@ -4557,6 +4486,16 @@
             "data": "EducationTable"
           }
         ],
+        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Education/QuerygetEducationpreAuth0Function/QuerygetEducationpreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetEducationpreAuth0FunctionQuerygetEducationpreAuth0FunctionAppSyncFunction7E698C2D"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetEducationpreAuth0Function"
+          }
+        ],
         "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Education/QuerygetEducationauth0Function/QuerygetEducationauth0Function.AppSyncFunction": [
           {
             "type": "aws:cdk:logicalId",
@@ -4595,6 +4534,16 @@
           {
             "type": "graphqltransformer:resourceName",
             "data": "Query.getEducation"
+          }
+        ],
+        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Education/QuerylistEducationspreAuth0Function/QuerylistEducationspreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistEducationspreAuth0FunctionQuerylistEducationspreAuth0FunctionAppSyncFunction77FE9ACF"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistEducationspreAuth0Function"
           }
         ],
         "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Education/QuerylistEducationsauth0Function/QuerylistEducationsauth0Function.AppSyncFunction": [
@@ -4647,6 +4596,16 @@
             "data": "MutationcreateEducationinit0Function"
           }
         ],
+        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Education/MutationcreateEducationpreAuth0Function/MutationcreateEducationpreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateEducationpreAuth0FunctionMutationcreateEducationpreAuth0FunctionAppSyncFunction3B3FB693"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateEducationpreAuth0Function"
+          }
+        ],
         "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Education/MutationcreateEducationauth0Function/MutationcreateEducationauth0Function.AppSyncFunction": [
           {
             "type": "aws:cdk:logicalId",
@@ -4697,6 +4656,16 @@
             "data": "MutationupdateEducationinit0Function"
           }
         ],
+        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Education/MutationupdateEducationpreAuth0Function/MutationupdateEducationpreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateEducationpreAuth0FunctionMutationupdateEducationpreAuth0FunctionAppSyncFunctionFCE6CF94"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateEducationpreAuth0Function"
+          }
+        ],
         "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Education/MutationupdateEducationauth0Function/MutationupdateEducationauth0Function.AppSyncFunction": [
           {
             "type": "aws:cdk:logicalId",
@@ -4735,6 +4704,16 @@
           {
             "type": "graphqltransformer:resourceName",
             "data": "Mutation.updateEducation"
+          }
+        ],
+        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Education/MutationdeleteEducationpreAuth0Function/MutationdeleteEducationpreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteEducationpreAuth0FunctionMutationdeleteEducationpreAuth0FunctionAppSyncFunctionC49911A7"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteEducationpreAuth0Function"
           }
         ],
         "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Education/MutationdeleteEducationauth0Function/MutationdeleteEducationauth0Function.AppSyncFunction": [
@@ -4895,26 +4874,6 @@
           {
             "type": "graphqltransformer:resourceName",
             "data": "Subscription.onDeleteEducation"
-          }
-        ],
-        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Education/EducationOwnerDataResolverFn/EducationOwnerDataResolverFn.AppSyncFunction": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "EducationOwnerDataResolverFnEducationOwnerDataResolverFnAppSyncFunction4A860C95"
-          },
-          {
-            "type": "graphqltransformer:resourceName",
-            "data": "EducationOwnerDataResolverFn"
-          }
-        ],
-        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Education/educationOwnerResolver": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "EducationownerResolver"
-          },
-          {
-            "type": "graphqltransformer:resourceName",
-            "data": "Education.owner"
           }
         ],
         "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Education/CDKMetadata/Default": [
@@ -5097,6 +5056,16 @@
             "data": "ExperienceTable"
           }
         ],
+        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Experience/QuerygetExperiencepreAuth0Function/QuerygetExperiencepreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetExperiencepreAuth0FunctionQuerygetExperiencepreAuth0FunctionAppSyncFunction480B829A"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetExperiencepreAuth0Function"
+          }
+        ],
         "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Experience/QuerygetExperienceauth0Function/QuerygetExperienceauth0Function.AppSyncFunction": [
           {
             "type": "aws:cdk:logicalId",
@@ -5135,6 +5104,16 @@
           {
             "type": "graphqltransformer:resourceName",
             "data": "Query.getExperience"
+          }
+        ],
+        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Experience/QuerylistExperiencespreAuth0Function/QuerylistExperiencespreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistExperiencespreAuth0FunctionQuerylistExperiencespreAuth0FunctionAppSyncFunction745715BE"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistExperiencespreAuth0Function"
           }
         ],
         "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Experience/QuerylistExperiencesauth0Function/QuerylistExperiencesauth0Function.AppSyncFunction": [
@@ -5187,6 +5166,16 @@
             "data": "MutationcreateExperienceinit0Function"
           }
         ],
+        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Experience/MutationcreateExperiencepreAuth0Function/MutationcreateExperiencepreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateExperiencepreAuth0FunctionMutationcreateExperiencepreAuth0FunctionAppSyncFunction5CAE4FD5"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateExperiencepreAuth0Function"
+          }
+        ],
         "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Experience/MutationcreateExperienceauth0Function/MutationcreateExperienceauth0Function.AppSyncFunction": [
           {
             "type": "aws:cdk:logicalId",
@@ -5237,6 +5226,16 @@
             "data": "MutationupdateExperienceinit0Function"
           }
         ],
+        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Experience/MutationupdateExperiencepreAuth0Function/MutationupdateExperiencepreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateExperiencepreAuth0FunctionMutationupdateExperiencepreAuth0FunctionAppSyncFunctionC8AA95B8"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateExperiencepreAuth0Function"
+          }
+        ],
         "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Experience/MutationupdateExperienceauth0Function/MutationupdateExperienceauth0Function.AppSyncFunction": [
           {
             "type": "aws:cdk:logicalId",
@@ -5275,6 +5274,16 @@
           {
             "type": "graphqltransformer:resourceName",
             "data": "Mutation.updateExperience"
+          }
+        ],
+        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Experience/MutationdeleteExperiencepreAuth0Function/MutationdeleteExperiencepreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteExperiencepreAuth0FunctionMutationdeleteExperiencepreAuth0FunctionAppSyncFunction3AFF88A8"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteExperiencepreAuth0Function"
           }
         ],
         "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Experience/MutationdeleteExperienceauth0Function/MutationdeleteExperienceauth0Function.AppSyncFunction": [
@@ -5435,26 +5444,6 @@
           {
             "type": "graphqltransformer:resourceName",
             "data": "Subscription.onDeleteExperience"
-          }
-        ],
-        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Experience/ExperienceOwnerDataResolverFn/ExperienceOwnerDataResolverFn.AppSyncFunction": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "ExperienceOwnerDataResolverFnExperienceOwnerDataResolverFnAppSyncFunction9B1F0E34"
-          },
-          {
-            "type": "graphqltransformer:resourceName",
-            "data": "ExperienceOwnerDataResolverFn"
-          }
-        ],
-        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Experience/experienceOwnerResolver": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "ExperienceownerResolver"
-          },
-          {
-            "type": "graphqltransformer:resourceName",
-            "data": "Experience.owner"
           }
         ],
         "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Experience/CDKMetadata/Default": [
@@ -6027,26 +6016,6 @@
             "data": "Subscription.onDeleteJobSeeker"
           }
         ],
-        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/JobSeeker/JobSeekerOwnerDataResolverFn/JobSeekerOwnerDataResolverFn.AppSyncFunction": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "JobSeekerOwnerDataResolverFnJobSeekerOwnerDataResolverFnAppSyncFunctionCF410823"
-          },
-          {
-            "type": "graphqltransformer:resourceName",
-            "data": "JobSeekerOwnerDataResolverFn"
-          }
-        ],
-        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/JobSeeker/jobSeekerOwnerResolver": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "JobSeekerownerResolver"
-          },
-          {
-            "type": "graphqltransformer:resourceName",
-            "data": "JobSeeker.owner"
-          }
-        ],
         "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/JobSeeker/CDKMetadata/Default": [
           {
             "type": "aws:cdk:logicalId",
@@ -6615,26 +6584,6 @@
           {
             "type": "graphqltransformer:resourceName",
             "data": "Subscription.onDeleteInvestor"
-          }
-        ],
-        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Investor/InvestorOwnerDataResolverFn/InvestorOwnerDataResolverFn.AppSyncFunction": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "InvestorOwnerDataResolverFnInvestorOwnerDataResolverFnAppSyncFunctionD1768844"
-          },
-          {
-            "type": "graphqltransformer:resourceName",
-            "data": "InvestorOwnerDataResolverFn"
-          }
-        ],
-        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Investor/investorOwnerResolver": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "InvestorownerResolver"
-          },
-          {
-            "type": "graphqltransformer:resourceName",
-            "data": "Investor.owner"
           }
         ],
         "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/Investor/CDKMetadata/Default": [
@@ -7591,42 +7540,6 @@
             "data": "amplifyDataConnectionStackNestedStackConnectionStackNestedStackResourceAB0F312B"
           }
         ],
-        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/AuthRolePolicy01/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "amplifyDataAuthRolePolicy01567A5654"
-          }
-        ],
-        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/AuthRolePolicy02/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "amplifyDataAuthRolePolicy02C25443ED"
-          }
-        ],
-        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/AuthRolePolicy03/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "amplifyDataAuthRolePolicy03A575F389"
-          }
-        ],
-        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/UnauthRolePolicy01/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "amplifyDataUnauthRolePolicy01355B9DCF"
-          }
-        ],
-        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/UnauthRolePolicy02/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "amplifyDataUnauthRolePolicy0221F1CD69"
-          }
-        ],
-        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/UnauthRolePolicy03/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "amplifyDataUnauthRolePolicy03DB4C304E"
-          }
-        ],
         "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/AmplifyCodegenAssets/AmplifyCodegenAssetsBucket/Resource": [
           {
             "type": "aws:cdk:logicalId",
@@ -7855,6 +7768,12 @@
             "data": "amplifyvitereacttypescriptstarterayasandboxed6b78520fdataamplifyDataAmplifyCodegenAssetsAmplifyCodegenAssetsDeploymentCustomResource1536MiB3DC7FEA4DestinationBucketArn"
           }
         ],
+        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyvitereacttypescriptstarterayasandboxed6b78520fdataamplifyDataGraphQLAPIDefaultApiKeyC403C90CApiKey": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyvitereacttypescriptstarterayasandboxed6b78520fdataamplifyDataGraphQLAPIDefaultApiKeyC403C90CApiKey"
+          }
+        ],
         "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data.NestedStack/data.NestedStackResource": [
           {
             "type": "aws:cdk:logicalId",
@@ -7889,6 +7808,12 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "amplifyApiModelSchemaS3Uri"
+          }
+        ],
+        "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/awsAppsyncApiKey": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "awsAppsyncApiKey"
           }
         ],
         "/amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/awsAppsyncAdditionalAuthenticationTypes": [

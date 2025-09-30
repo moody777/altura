@@ -1,13 +1,9 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { signUp as amplifySignUp, signIn as amplifySignIn, signOut as amplifySignOut, confirmSignUp as amplifyConfirmSignUp } from "aws-amplify/auth";
-import type { Schema } from '../../amplify/data/resource';
-import { generateClient } from 'aws-amplify/data';
-
-const client = generateClient<Schema>();
 export type UserRole = 'startup' | 'investor' | 'job_seeker';
 
 export interface User {
-  id: string | null;
+  id: string;
   email: string;
   name: string;
   role?: UserRole;
@@ -45,22 +41,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
   const [tempUser, setTempUser] = useState<User | null>(null);
   useEffect(() => {
-    // Check for existing session
-    const checkAuth = async () => {
-      try {
-        const savedUser = localStorage.getItem('user');
-        if (savedUser) {
-          const userData = JSON.parse(savedUser);
-          setUser(userData);
-        }
-      } catch (error) {
-        console.error('Error loading saved user:', error);
-        // Clear invalid user data
-        localStorage.removeItem('user');
-        setUser(null);
-      } finally {
-        setLoading(false);
+    // Simulate checking for existing session
+    const checkAuth = () => {
+      const savedUser = localStorage.getItem('user');
+      if (savedUser) {
+        setUser(JSON.parse(savedUser));
       }
+      setLoading(false);
     };
 
     checkAuth();
@@ -75,32 +62,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         password: _password,
       });
       
-      // Fetch user from database
-      const { data: users } = await client.models.User.list({
-        filter: { email: { eq: email } }
-      });
+      // Create a mock user object since we're not using real user data
+      const mockUser: User = {
+        id: `user-${Date.now()}`,
+        email: email,
+        name: email.split('@')[0],
+        onboardingComplete: false,
+      };
       
-      if (users && users.length > 0) {
-        const dbUser = users[0];
-        const userObj: User = {
-          id: dbUser.id,
-          email: dbUser.email,
-          name: dbUser.name,
-          role: dbUser.role as UserRole,
-          onboardingComplete: dbUser.onboardingComplete,
-          city: dbUser.city || undefined,
-          country: dbUser.country || undefined,
-          phone: dbUser.phone || undefined,
-          linkedin: dbUser.linkedin || undefined,
-          bio: dbUser.bio || undefined,
-          portfolio: dbUser.portfolio || undefined,
-        };
-        
-        setUser(userObj);
-        localStorage.setItem('user', JSON.stringify(userObj));
-      } else {
-        throw new Error('User not found in database');
-      }
+      setUser(mockUser);
+      localStorage.setItem('user', JSON.stringify(mockUser));
     } catch (error) {
       console.error('Sign in failed:', error);
       throw error;
@@ -123,30 +94,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         },
       });
       
-      // Create user in database
-      const { data: newUser } = await client.models.User.create({
+      // Create a mock user object
+      const mockUser: User = {
+        id: `user-${Date.now()}`,
         email: email,
         name: name,
-        role: 'startup', // Default role, will be updated during onboarding
         onboardingComplete: false,
-      });
-      
-      if (newUser) {
-        const userObj: User = {
-          id: newUser.id,
-          email: newUser.email,
-          name: newUser.name,
-          role: newUser.role as UserRole,
-          onboardingComplete: newUser.onboardingComplete,
-          city: newUser.city || undefined,
-          country: newUser.country || undefined,
-          phone: newUser.phone || undefined,
-          linkedin: newUser.linkedin || undefined,
-          bio: newUser.bio || undefined,
-          portfolio: newUser.portfolio || undefined,
-        };
-        setTempUser(userObj);
-      }
+      };
+      setTempUser(mockUser);
     } catch (error) {
       console.error('Sign up failed:', error);
       throw error;
@@ -184,28 +139,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signOut = async () => {
-    setLoading(true);
     try {
       await amplifySignOut();
       setUser(null);
-      setTempUser(null);
       localStorage.removeItem('user');
     } catch (error) {
       console.error('Sign out failed:', error);
       throw error;
-    } finally {
-      setLoading(false);
     }
   };
 
   const updateUser = async (updates: Partial<User>) => {
     if (user) {
-      // Update user in database
-      await client.models.User.update({
-        id: user.id,
-        ...updates
-      });
-      
       const updatedUser = { ...user, ...updates };
       setUser(updatedUser);
       localStorage.setItem('user', JSON.stringify(updatedUser));

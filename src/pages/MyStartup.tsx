@@ -25,12 +25,14 @@ import {
 
 const MyStartup: React.FC = () => {
   const { user } = useAuth();
-  const { startups, jobs, createJob, jobApplications, updateApplicationStatus } = useData();
+  const { startups, jobs, createJob, jobApplications, updateApplicationStatus, reload, sendAIMessage } = useData();
   const { addNotification } = useNotifications();
   
   // Find user's startup
   const userStartup = (startups || []).find(s => s.founderId === user?.id);
-  
+  console.log('All startups:', startups);
+  console.log('User ID:', user?.id);
+  console.log('User startup:', userStartup);
   // State for forms and modals
   const [showJobForm, setShowJobForm] = useState(false);
   const [showEditProfile, setShowEditProfile] = useState(false);
@@ -283,33 +285,30 @@ const MyStartup: React.FC = () => {
     setCurrentMessage('');
     setIsTyping(true);
 
-    // Simulate AI response
-    setTimeout(() => {
-      const aiResponses = [
-        "That's a great question! Based on your startup's current stage, I'd recommend focusing on customer validation first. Have you conducted any user interviews?",
-        "For hiring, I suggest creating a clear job description with specific skills and cultural fit requirements. What role are you looking to fill?",
-        "Regarding funding, your startup seems to be in a good position. Consider preparing a pitch deck with clear metrics and growth projections.",
-        "I can help you analyze your business model. What's your primary revenue stream, and how do you plan to scale it?",
-        "For marketing strategy, I'd recommend starting with content marketing and social media presence. What's your target audience?",
-        "That's an interesting challenge. Let me help you think through this systematically. What specific aspect would you like to focus on first?",
-        "Based on your startup's sector, I suggest looking into industry-specific accelerators and networking events. Have you considered joining any startup communities?",
-        "For product development, I recommend following the lean startup methodology. What's your current MVP status?",
-        "Great point! Let me help you develop a strategy for that. What resources do you currently have available?",
-        "I understand your concern. Many startups face similar challenges. Let's break this down into actionable steps. What's your biggest priority right now?"
-      ];
-
-      const randomResponse = aiResponses[Math.floor(Math.random() * aiResponses.length)];
+    try {
+      // Use the DataContext sendAIMessage function
+      const aiResponse = await sendAIMessage(currentMessage.trim());
       
       const aiMessage = {
         id: Date.now() + 1,
         type: 'ai',
-        content: randomResponse,
+        content: aiResponse,
         timestamp: new Date().toISOString()
       };
 
       setChatMessages(prev => [...prev, aiMessage]);
+    } catch (error) {
+      console.error('Failed to get AI response:', error);
+      const errorMessage = {
+        id: Date.now() + 1,
+        type: 'ai',
+        content: 'Sorry, I encountered an error. Please try again.',
+        timestamp: new Date().toISOString()
+      };
+      setChatMessages(prev => [...prev, errorMessage]);
+    } finally {
       setIsTyping(false);
-    }, 1500);
+    }
   };
 
   const toggleChat = () => {
@@ -332,6 +331,13 @@ const MyStartup: React.FC = () => {
     scrollToBottom();
   }, [chatMessages, isTyping]);
 
+  // Reload data when component mounts to ensure we have the latest data
+  useEffect(() => {
+    if (user && !userStartup) {
+      reload();
+    }
+  }, [user, userStartup, reload]);
+
   if (!userStartup) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center">
@@ -341,6 +347,17 @@ const MyStartup: React.FC = () => {
           <p className="text-gray-300 mb-4">
             You don't have a startup profile yet. Complete your onboarding to create one.
           </p>
+          <div className="space-x-4">
+            <button
+              onClick={reload}
+              className="bg-[#B8860B] text-white px-6 py-3 rounded-lg hover:bg-[#A67C00] transition-colors flex items-center space-x-2 mx-auto"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+              <span>Reload Data</span>
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -361,6 +378,17 @@ const MyStartup: React.FC = () => {
                 <p className="text-gray-300">Your startup dashboard</p>
               </div>
             </div>
+            <div className="flex items-center space-x-3">
+              <button
+                onClick={reload}
+                className="bg-gray-700 text-white px-4 py-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center space-x-2"
+                title="Reload Data"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                <span>Reload</span>
+              </button>
             <button
               onClick={() => setShowEditProfile(true)}
               className="bg-[#B8860B] text-white px-6 py-3 rounded-lg hover:bg-[#A67C00] transition-colors flex items-center space-x-2"
@@ -368,6 +396,7 @@ const MyStartup: React.FC = () => {
               <Edit className="w-4 h-4" />
               <span>Edit Profile</span>
             </button>
+            </div>
           </div>
         </div>
 

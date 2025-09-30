@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { useData } from '../contexts/DataContext';
+import { useData, Startup } from '../contexts/DataContext';
 import { useAuth } from '../contexts/AuthContext';
 import StartupCard from '../components/StartupCard';
 import SearchFilters from '../components/SearchFilters';
@@ -11,7 +11,7 @@ const Home: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filters, setFilters] = useState({
     sector: 'all',
-    stage: 'all',
+    type: 'all',
     hiringStatus: 'all',
     fundingNeeds: 'all',
     location: ''
@@ -128,7 +128,7 @@ const Home: React.FC = () => {
                 setSearchQuery('');
                 setFilters({
                   sector: 'all',
-                  stage: 'all',
+                  type: 'all',
                   hiringStatus: 'all',
                   fundingNeeds: 'all',
                   location: ''

@@ -15,23 +15,14 @@ import {
 } from 'lucide-react';
 
 const Navbar: React.FC = () => {
-  const { user, signOut, loading } = useAuth();
+  const { user, signOut } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [signingOut, setSigningOut] = useState(false);
 
   const handleSignOut = async () => {
-    try {
-      setSigningOut(true);
-      await signOut();
-      navigate('/auth');
-    } catch (error) {
-      console.error('Sign out error:', error);
-      // You could add a toast notification here
-    } finally {
-      setSigningOut(false);
-    }
+    await signOut();
+    navigate('/auth');
   };
 
   const navItems = [
@@ -94,13 +85,10 @@ const Navbar: React.FC = () => {
                   
                   <button
                     onClick={handleSignOut}
-                    disabled={signingOut || loading}
-                    className="flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-red-400 hover:bg-red-900/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-red-400 hover:bg-red-900/20 transition-colors"
                   >
                     <LogOut className="w-4 h-4" />
-                    <span className="hidden md:inline">
-                      {signingOut ? 'Signing Out...' : 'Sign Out'}
-                    </span>
+                    <span className="hidden md:inline">Sign Out</span>
                   </button>
                 </>
               ) : (
@@ -143,35 +131,6 @@ const Navbar: React.FC = () => {
                   <span>{label}</span>
                 </Link>
               ))}
-              
-              {user && (
-                <>
-                  <Link
-                    to="/profile"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      isActive('/profile')
-                        ? 'bg-[#B8860B] text-white'
-                        : 'text-gray-300 hover:text-[#B8860B] hover:bg-gray-700'
-                    }`}
-                  >
-                    <User className="w-4 h-4" />
-                    <span>Profile</span>
-                  </Link>
-                  
-                  <button
-                    onClick={() => {
-                      setMobileMenuOpen(false);
-                      handleSignOut();
-                    }}
-                    disabled={signingOut || loading}
-                    className="flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-red-400 hover:bg-red-900/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed w-full"
-                  >
-                    <LogOut className="w-4 h-4" />
-                    <span>{signingOut ? 'Signing Out...' : 'Sign Out'}</span>
-                  </button>
-                </>
-              )}
             </div>
           </div>
         )}

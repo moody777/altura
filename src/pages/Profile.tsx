@@ -167,7 +167,7 @@ const Profile: React.FC = () => {
                       placeholder="+20 (123) 456-7890"
                     />
                   ) : (
-                    <p className="text-white">{editedProfile.phone || 'Not provided'}</p>
+                    <p className="text-white">{editedProfile.phone || '+201015949366'}</p>
                   )}
                 </div>
 
@@ -215,7 +215,7 @@ const Profile: React.FC = () => {
                     <p className="text-white">
                       {editedProfile.location.city && editedProfile.location.country 
                         ? `${editedProfile.location.city}, ${editedProfile.location.country}`
-                        : 'Not provided'
+                        : 'Madinaty, Cairo'
                       }
                     </p>
                   )}
@@ -232,7 +232,7 @@ const Profile: React.FC = () => {
                       placeholder="Tell us about yourself..."
                     />
                   ) : (
-                    <p className="text-white">{editedProfile.bio || 'Not provided'}</p>
+                    <p className="text-white">{editedProfile.bio || 'Ai engineer'}</p>
                   )}
                 </div>
               </div>
@@ -550,7 +550,7 @@ const Profile: React.FC = () => {
                 </div>
                 <div className="flex items-center space-x-3">
                   <Calendar className="w-4 h-4 text-gray-400" />
-                  <span className="text-gray-300">Member since 2024</span>
+                  <span className="text-gray-300">Member since 2025</span>
                 </div>
               </div>
             </div>

@@ -3,7 +3,7 @@ import { useAuth } from './AuthContext';
 import type { Schema } from '../../amplify/data/resource'
 import { generateClient } from 'aws-amplify/data'
 
-const client = generateClient<Schema>()
+
 
 
 interface DataContextType {
@@ -14,13 +14,9 @@ interface DataContextType {
   jobApplications: Schema["JobApplication"]["type"][];
   jobSeekers: Schema["JobSeeker"]["type"][];
   investors: Schema["Investor"]["type"][];
-  users: Schema["User"]["type"][];
   loading: boolean;
   searchStartups: (query: string, filters?: any) => Schema["Startup"]["type"][];
   likeStartup: (startupId: string) => Promise<void>;
-  createUser: (userData: Omit<Schema["User"]["type"], 'id' | 'createdAt' | 'updatedAt'>) => Promise<void>;
-  updateUser: (userId: string, userData: Partial<Schema["User"]["type"]>) => Promise<void>;
-  getUserById: (userId: string) => Schema["User"]["type"] | undefined;
   createStartup: (startupData: Omit<Schema["Startup"]["type"], 'id' | 'likes' | 'commentsNo' | 'createdAt' | 'updatedAt'>) => Promise<void>;
   createJob: (jobData: Omit<Schema["Job"]["type"], 'id' | 'createdAt' | 'updatedAt'>) => Promise<void>;
   createJobSeeker: (jobSeekerData: Omit<Schema["JobSeeker"]["type"], 'id' | 'createdAt' | 'updatedAt'>) => Promise<void>;
@@ -28,6 +24,8 @@ interface DataContextType {
   updateApplicationStatus: (applicationId: string, status: Schema["JobApplication"]["type"]['status']) => Promise<void>;
   addComment: (startupId: string, content: string) => Promise<void>;
   likeComment: (commentId: string) => Promise<void>;
+  reload: () => Promise<void>;
+  sendAIMessage: (message: string) => Promise<string>;
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
@@ -168,36 +166,55 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [jobApplications, setJobApplications] = useState<Schema["JobApplication"]["type"][]>([]);
   const [jobSeekers, setJobSeekers] = useState<Schema["JobSeeker"]["type"][]>([]);
   const [investors, setInvestors] = useState<Schema["Investor"]["type"][]>([]);
-  const [users, setUsers] = useState<Schema["User"]["type"][]>([]);
   const [loading, setLoading] = useState(false);
   const { user } = useAuth();
+  const client = generateClient<Schema>();
 
 
   const load = async () => {
-    const { data: startups } = await client.models.Startup.list();
-    const { data: jobs } = await client.models.Job.list();
-    const { data: investments } = await client.models.Investment.list();
-    const { data: comments } = await client.models.Comment.list();
-    const { data: jobApplications } = await client.models.JobApplication.list();
-    const { data: jobSeekers } = await client.models.JobSeeker.list();
-    const { data: investors } = await client.models.Investor.list();
-    const { data: users } = await client.models.User.list();
-    setStartups(startups);
-    setJobs(jobs);
-    setInvestments(investments);
-    setComments(comments);
-    setJobApplications(jobApplications);
-    setJobSeekers(jobSeekers);
-    setInvestors(investors);
-    setUsers(users);
+    try {
+      setLoading(true);
+      const { data: startups } = await client.models.Startup.list();
+      const { data: jobs } = await client.models.Job.list();
+      const { data: investments } = await client.models.Investment.list();
+      const { data: comments } = await client.models.Comment.list();
+      const { data: jobApplications } = await client.models.JobApplication.list();
+      const { data: jobSeekers } = await client.models.JobSeeker.list();
+      const { data: investors } = await client.models.Investor.list();
+      setStartups(startups);
+      setJobs(jobs);
+      setInvestments(investments);
+      setComments(comments);
+      setJobApplications(jobApplications);
+      setJobSeekers(jobSeekers);
+      setInvestors(investors);
+      
+      // Test the Recommendations function
+      try {
+        const { data: recommendations } = await client.queries.Recommendations({
+          text: 'AI',
+          indexName: 'Jobs',
+        });
+        console.log('Recommendations:', recommendations);
+      } catch (recommendationError) {
+        console.error('Failed to load recommendations:', recommendationError);
+      }
+    } catch (error) {
+      console.error('Failed to load data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const reload = async () => {
+    await load();
   };
 
   useEffect(() => {
     load();
-    setLoading(false);
   }, []);
 
-  
+
   const searchStartups = (query: string, filters?: any) => {
     let filtered = startups || [];
     
@@ -247,7 +264,11 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
     if (newStartup) {
       setStartups(prev => [...(prev || []), newStartup]);
+      console.log('New startup created:', newStartup);
+    }else{
+      console.log('Failed to create startup');
     }
+    load();
   };
 
   const createJob = async (jobData: Omit<Schema["Job"]["type"], 'id' | 'createdAt' | 'updatedAt'>) => {
@@ -310,23 +331,106 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const createUser = async (userData: Omit<Schema["User"]["type"], 'id' | 'createdAt' | 'updatedAt'>) => {
-    const { data: newUser } = await client.models.User.create(userData);
-    if (newUser) {
-      setUsers(prev => [...(prev || []), newUser]);
+  const sendAIMessage = async (message: string): Promise<string> => {
+    // Simulate AI processing delay
+    await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 2000));
+
+    const lowerMessage = message.toLowerCase();
+    
+    // Check if message contains "roi"
+    if (lowerMessage.includes('roi')) {
+      return `ROI (Return on Investment) Explanation:
+
+ROI is a key financial metric that measures the efficiency of an investment. It's calculated as:
+ROI = (Net Profit / Cost of Investment) × 100%
+
+**5 Other Important Startup Metrics:**
+
+1. **Customer Acquisition Cost (CAC)** - The cost to acquire a new customer. Lower CAC means more efficient marketing.
+
+2. **Customer Lifetime Value (CLV)** - Total revenue expected from a customer over their lifetime. CLV should be 3x higher than CAC.
+
+3. **Monthly Recurring Revenue (MRR)** - Predictable monthly revenue from subscriptions. Essential for SaaS businesses.
+
+4. **Burn Rate** - How quickly you're spending cash. Critical for runway planning and fundraising.
+
+5. **Net Promoter Score (NPS)** - Measures customer satisfaction and likelihood to recommend your product. Scores above 50 are excellent.
+
+**Pro Tip:** Focus on improving these metrics systematically rather than just chasing high ROI numbers. Sustainable growth comes from balanced metrics!`;
     }
-  };
+    if (lowerMessage.includes('business model')) {
+      return `**Business Model Overview:**
 
-  const updateUser = async (userId: string, userData: Partial<Schema["User"]["type"]>) => {
-    await client.models.User.update({
-      id: userId,
-      ...userData
-    });
-    load(); // Reload data
-  };
+A business model describes how your startup creates, delivers, and captures value. Common types include:
 
-  const getUserById = (userId: string) => {
-    return users.find(u => u.id === userId);
+- **B2B (Business-to-Business):** Selling products/services to other businesses.
+- **B2C (Business-to-Consumer):** Selling directly to consumers.
+- **Marketplace:** Connecting buyers and sellers, often taking a commission.
+- **Subscription:** Charging customers a recurring fee for ongoing access.
+
+**Key Questions:**
+- Who are your target customers?
+- What problem are you solving?
+- How do you make money (revenue streams)?
+- What are your main costs?
+
+**Pro Tip:** Use the Business Model Canvas to map out your ideas and iterate quickly!`;
+    }
+    if (lowerMessage.includes('funding') || lowerMessage.includes('raise capital')) {
+      return `**Startup Funding Stages:**
+
+1. **Pre-seed:** Early funding from founders, friends, or family.
+2. **Seed:** Initial investment to validate your idea, often from angel investors.
+3. **Series A/B/C:** Larger rounds from venture capitalists to scale your business.
+
+**Tips for Raising Capital:**
+- Build a compelling pitch deck (problem, solution, traction, team, financials).
+- Research investors who focus on your industry and stage.
+- Be clear about how much you need and how you'll use it.
+
+**Pro Tip:** Investors invest in teams as much as ideas. Highlight your team's strengths and vision!`;
+    }
+    if (lowerMessage.includes('mvp') || lowerMessage.includes('minimum viable product')) {
+      return `**MVP (Minimum Viable Product) Guide:**
+
+An MVP is the simplest version of your product that solves the core problem for your target users.
+
+**Steps to Build an MVP:**
+1. Identify the main problem and your target audience.
+2. List essential features only—avoid "nice to have" extras.
+3. Build quickly and launch to get real user feedback.
+4. Iterate based on feedback and usage data.
+
+**Pro Tip:** Don't wait for perfection. Launch early, learn fast, and improve!`;
+    }
+    if (lowerMessage.includes('market research')) {
+      return `**Market Research Basics:**
+
+Market research helps you understand your customers, competitors, and industry trends.
+
+**How to Conduct Market Research:**
+- **Surveys & Interviews:** Talk to potential customers to learn about their needs.
+- **Competitor Analysis:** Study similar products and their strengths/weaknesses.
+- **Industry Reports:** Use online resources for market size and growth trends.
+
+Pro Tip: Validate your assumptions with real data before investing heavily in product development!`;
+    }
+
+    // Default responses for other messages
+    const defaultResponses = [
+      "That's a great question! Based on your startup's current stage, I'd recommend focusing on customer validation first. Have you conducted any user interviews?",
+      "For hiring, I suggest creating a clear job description with specific skills and cultural fit requirements. What role are you looking to fill?",
+      "Regarding funding, your startup seems to be in a good position. Consider preparing a pitch deck with clear metrics and growth projections.",
+      "I can help you analyze your business model. What's your primary revenue stream, and how do you plan to scale it?",
+      "For marketing strategy, I'd recommend starting with content marketing and social media presence. What's your target audience?",
+      "That's an interesting challenge. Let me help you think through this systematically. What specific aspect would you like to focus on first?",
+      "Based on your startup's sector, I suggest looking into industry-specific accelerators and networking events. Have you considered joining any startup communities?",
+      "For product development, I recommend following the lean startup methodology. What's your current MVP status?",
+      "Great point! Let me help you develop a strategy for that. What resources do you currently have available?",
+      "I understand your concern. Many startups face similar challenges. Let's break this down into actionable steps. What's your biggest priority right now?"
+    ];
+
+    return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
   };
 
   return (
@@ -338,20 +442,18 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
       jobApplications,
       jobSeekers,
       investors,
-      users,
       loading,
       searchStartups,
       likeStartup,
-      createUser,
-      updateUser,
-      getUserById,
       createStartup,
       createJob,
       createJobSeeker,
       createInvestor,
       updateApplicationStatus,
       addComment,
-      likeComment
+      likeComment,
+      reload,
+      sendAIMessage
     }}>
       {children}
     </DataContext.Provider>

@@ -12,7 +12,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "Startupjobsauth0Function",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6b2992c7c9229481f22a0c61c82d5f101b84b0d9c765c2bc8e7eb7b7658cee4a.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
@@ -155,7 +155,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "Startupinvestmentsauth0Function",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6b2992c7c9229481f22a0c61c82d5f101b84b0d9c765c2bc8e7eb7b7658cee4a.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
@@ -298,7 +298,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "Startupcommentsauth0Function",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6b2992c7c9229481f22a0c61c82d5f101b84b0d9c765c2bc8e7eb7b7658cee4a.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
@@ -441,7 +441,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "JobjobApplicationsauth0Function",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6b2992c7c9229481f22a0c61c82d5f101b84b0d9c765c2bc8e7eb7b7658cee4a.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
@@ -584,7 +584,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "Usercommentsauth0Function",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6b2992c7c9229481f22a0c61c82d5f101b84b0d9c765c2bc8e7eb7b7658cee4a.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
@@ -727,7 +727,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "JobSeekereducationauth0Function",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6b2992c7c9229481f22a0c61c82d5f101b84b0d9c765c2bc8e7eb7b7658cee4a.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
@@ -870,7 +870,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "JobSeekerexperienceauth0Function",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6b2992c7c9229481f22a0c61c82d5f101b84b0d9c765c2bc8e7eb7b7658cee4a.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
@@ -1013,7 +1013,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "JobSeekerjobApplicationsauth0Function",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6b2992c7c9229481f22a0c61c82d5f101b84b0d9c765c2bc8e7eb7b7658cee4a.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
@@ -1156,7 +1156,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "Investorinvestmentsauth0Function",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6b2992c7c9229481f22a0c61c82d5f101b84b0d9c765c2bc8e7eb7b7658cee4a.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
@@ -1299,7 +1299,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "Userstartupsauth0Function",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6b2992c7c9229481f22a0c61c82d5f101b84b0d9c765c2bc8e7eb7b7658cee4a.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
@@ -1442,7 +1442,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "UserjobSeekersauth0Function",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6b2992c7c9229481f22a0c61c82d5f101b84b0d9c765c2bc8e7eb7b7658cee4a.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
@@ -1585,7 +1585,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "Userinvestorsauth0Function",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6b2992c7c9229481f22a0c61c82d5f101b84b0d9c765c2bc8e7eb7b7658cee4a.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
@@ -1728,7 +1728,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "Startupfounderauth0Function",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6b2992c7c9229481f22a0c61c82d5f101b84b0d9c765c2bc8e7eb7b7658cee4a.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
@@ -1871,7 +1871,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "Jobstartupauth0Function",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6b2992c7c9229481f22a0c61c82d5f101b84b0d9c765c2bc8e7eb7b7658cee4a.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
@@ -2014,7 +2014,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "Investmentinvestorauth0Function",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6b2992c7c9229481f22a0c61c82d5f101b84b0d9c765c2bc8e7eb7b7658cee4a.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
@@ -2157,7 +2157,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "Investmentstartupauth0Function",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6b2992c7c9229481f22a0c61c82d5f101b84b0d9c765c2bc8e7eb7b7658cee4a.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
@@ -2300,7 +2300,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "Commentstartupauth0Function",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6b2992c7c9229481f22a0c61c82d5f101b84b0d9c765c2bc8e7eb7b7658cee4a.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
@@ -2443,7 +2443,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "Commentuserauth0Function",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6b2992c7c9229481f22a0c61c82d5f101b84b0d9c765c2bc8e7eb7b7658cee4a.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
@@ -2586,7 +2586,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "JobApplicationjobauth0Function",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6b2992c7c9229481f22a0c61c82d5f101b84b0d9c765c2bc8e7eb7b7658cee4a.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
@@ -2729,7 +2729,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "JobApplicationapplicantauth0Function",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6b2992c7c9229481f22a0c61c82d5f101b84b0d9c765c2bc8e7eb7b7658cee4a.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
@@ -2872,7 +2872,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "EducationjobSeekerauth0Function",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6b2992c7c9229481f22a0c61c82d5f101b84b0d9c765c2bc8e7eb7b7658cee4a.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
@@ -3015,7 +3015,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "ExperiencejobSeekerauth0Function",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6b2992c7c9229481f22a0c61c82d5f101b84b0d9c765c2bc8e7eb7b7658cee4a.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
@@ -3158,7 +3158,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "JobSeekeruserauth0Function",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6b2992c7c9229481f22a0c61c82d5f101b84b0d9c765c2bc8e7eb7b7658cee4a.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
@@ -3301,7 +3301,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "Investoruserauth0Function",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6b2992c7c9229481f22a0c61c82d5f101b84b0d9c765c2bc8e7eb7b7658cee4a.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
@@ -3437,6 +3437,8 @@
    "Properties": {
     "Analytics": "v2:deflate64:H4sIAAAAAAAA/yXMQQqDMBBA0bO4j1ONFLqtQpdd6AFkGkeJ2olkEqWIdy+2q8fffA06v0GW4Cap6aZ0ti/YnySBuiagmRRu0u5StChCQeB+oqSAMpqJQolCCpdFPmxgr3p+RDbBOq4c93aIHs9QVc81iZtX8sehfo8m4GB5OBS7jmCUy6o15FfIklGsTX3kYN8E9d8vYFh6D6cAAAA="
    },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
    "Metadata": {
     "aws:cdk:path": "amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/data/amplifyData/ConnectionStack/CDKMetadata/Default"
    },

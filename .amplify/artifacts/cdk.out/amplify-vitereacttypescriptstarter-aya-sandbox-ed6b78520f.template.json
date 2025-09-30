@@ -41,6 +41,7 @@
     "awsAppsyncAuthenticationType",
     "awsAppsyncRegion",
     "amplifyApiModelSchemaS3Uri",
+    "awsAppsyncApiKey",
     "awsAppsyncAdditionalAuthenticationTypes"
    ]
   }
@@ -153,7 +154,7 @@
    }
   },
   "awsAppsyncAuthenticationType": {
-   "Value": "AMAZON_COGNITO_USER_POOLS"
+   "Value": "API_KEY"
   },
   "awsAppsyncRegion": {
    "Value": {
@@ -197,8 +198,16 @@
     ]
    }
   },
+  "awsAppsyncApiKey": {
+   "Value": {
+    "Fn::GetAtt": [
+     "data7552DF31",
+     "Outputs.amplifyvitereacttypescriptstarterayasandboxed6b78520fdataamplifyDataGraphQLAPIDefaultApiKeyC403C90CApiKey"
+    ]
+   }
+  },
   "awsAppsyncAdditionalAuthenticationTypes": {
-   "Value": "AWS_IAM"
+   "Value": "AMAZON_COGNITO_USER_POOLS,AWS_IAM"
   }
  },
  "Resources": {
@@ -299,7 +308,7 @@
        {
         "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
        },
-       "/5798290f416d8fea33a6afd502572456758b19c735b4566a8c397c12cd9dda4a.json"
+       "/ebe4b1c2ae5093da76363ec2ec6d1e6cb7ee8ebb47a503594d50808aeaf32c60.json"
       ]
      ]
     }
@@ -317,6 +326,8 @@
    "Properties": {
     "Analytics": "v2:deflate64:H4sIAAAAAAAA/zPSMzK00DNQTCwv1k1OydbNyUzSqw4uSUzO1nFOy/MvLSkoLQGxwEK1Onn5Kal6WcX6ZUZGeoamegaKWcWZmbpFpXklmbmpekEQGgALGBwbVAAAAA=="
    },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
    "Metadata": {
     "aws:cdk:path": "amplify-vitereacttypescriptstarter-aya-sandbox-ed6b78520f/CDKMetadata/Default"
    },

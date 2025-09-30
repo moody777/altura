@@ -15,8 +15,6 @@ const Auth: React.FC = () => {
     password: '',
     confirmationCode: ''
   });
-  const [error, setError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
 
   // Auto-advance slides
   useEffect(() => {
@@ -48,66 +46,25 @@ const Auth: React.FC = () => {
     return <Navigate to={user.onboardingComplete ? '/' : '/onboarding'} replace />;
   }
 
-  const validatePassword = (password: string) => {
-    const hasSymbol = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
-    const hasNumber = /\d/.test(password);
-    const hasUpperCase = /[A-Z]/.test(password);
-    const hasLowerCase = /[a-z]/.test(password);
-    const isLongEnough = password.length >= 8;
-
-    if (!isLongEnough) return 'Password must be at least 8 characters long';
-    if (!hasSymbol) return 'Password must contain at least one symbol (!@#$%^&*()_+-=[]{}|;:,.<>?)';
-    if (!hasNumber) return 'Password must contain at least one number';
-    if (!hasUpperCase) return 'Password must contain at least one uppercase letter';
-    if (!hasLowerCase) return 'Password must contain at least one lowercase letter';
-    return '';
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
-    setPasswordError('');
-
     try {
       if (authStep === 'signup') {
-        // Validate password for signup
-        const passwordValidation = validatePassword(formData.password);
-        if (passwordValidation) {
-          setPasswordError(passwordValidation);
-          return;
-        }
         await signUp(formData.email, formData.password, formData.name);
         setAuthStep('confirm');
       } else if (authStep === 'confirm') {
+        // Handle confirmation code verification
         await confirmSignUp(formData.email, formData.confirmationCode);
       } else {
         await signIn(formData.email, formData.password);
       }
-    } catch (error: any) {
+    } catch (error) {
       console.error('Auth error:', error);
-      
-      // Handle specific error messages
-      if (error.message?.includes('Invalid username or password')) {
-        setError('Invalid email or password. Please check your credentials and try again.');
-      } else if (error.message?.includes('User already exists')) {
-        setError('An account with this email already exists. Please sign in instead.');
-      } else if (error.message?.includes('Invalid verification code')) {
-        setError('Invalid verification code. Please check your email and try again.');
-      } else if (error.message?.includes('Code expired')) {
-        setError('Verification code has expired. Please request a new one.');
-      } else if (error.message?.includes('User not found')) {
-        setError('No account found with this email. Please sign up first.');
-      } else {
-        setError('An error occurred. Please try again.');
-      }
     }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    // Clear errors when user starts typing
-    if (error) setError('');
-    if (passwordError && e.target.name === 'password') setPasswordError('');
   };
 
   const handleBackToWebsite = () => {
@@ -228,13 +185,6 @@ const Auth: React.FC = () => {
             </p>
           </div>
 
-          {/* Error Display */}
-          {error && (
-            <div className="mb-4 p-3 bg-red-900/20 border border-red-700 rounded-lg">
-              <p className="text-red-300 text-sm">{error}</p>
-            </div>
-          )}
-
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-1">
             {authStep === 'signup' && (
@@ -319,9 +269,7 @@ const Auth: React.FC = () => {
                       name="password"
                       value={formData.password}
                       onChange={handleChange}
-                      className={`w-full px-4 py-3 bg-gray-700/50 border rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-[#B8860B] focus:border-transparent transition-colors pr-12 ${
-                        passwordError ? 'border-red-500' : 'border-gray-600'
-                      }`}
+                      className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-[#B8860B] focus:border-transparent transition-colors pr-12"
                       placeholder="Enter your password"
                       required
                     />
@@ -333,21 +281,6 @@ const Auth: React.FC = () => {
                       {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                     </button>
                   </div>
-                  {passwordError && (
-                    <p className="mt-1 text-sm text-red-400">{passwordError}</p>
-                  )}
-                  {authStep === 'signup' && (
-                    <div className="mt-2 text-xs text-gray-400">
-                      <p>Password must contain:</p>
-                      <ul className="list-disc list-inside ml-2 mt-1 space-y-1">
-                        <li>At least 8 characters</li>
-                        <li>One uppercase letter</li>
-                        <li>One lowercase letter</li>
-                        <li>One number</li>
-                        <li>One symbol (!@#$%^&*()_+-=[]{}|;:,.)</li>
-                      </ul>
-                    </div>
-                  )}
                 </div>
               </>
             )}
