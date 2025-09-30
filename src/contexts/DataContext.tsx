@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { useAuth } from './AuthContext';
 import type { Schema } from '../../amplify/data/resource'
 import { generateClient } from 'aws-amplify/data'
 
@@ -25,7 +26,7 @@ interface DataContextType {
   createJobSeeker: (jobSeekerData: Omit<Schema["JobSeeker"]["type"], 'id' | 'createdAt' | 'updatedAt'>) => Promise<void>;
   createInvestor: (investorData: Omit<Schema["Investor"]["type"], 'id' | 'createdAt' | 'updatedAt'>) => Promise<void>;
   updateApplicationStatus: (applicationId: string, status: Schema["JobApplication"]["type"]['status']) => Promise<void>;
-  addComment: (startupId: string, content: string, userId: string) => Promise<void>;
+  addComment: (startupId: string, content: string) => Promise<void>;
   likeComment: (commentId: string) => Promise<void>;
 }
 
@@ -169,6 +170,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [investors, setInvestors] = useState<Schema["Investor"]["type"][]>([]);
   const [users, setUsers] = useState<Schema["User"]["type"][]>([]);
   const [loading, setLoading] = useState(false);
+  const { user } = useAuth();
 
 
   const load = async () => {
@@ -277,9 +279,11 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     load(); // Reload data
   };
 
-  const addComment = async (startupId: string, content: string, userId: string) => {
+  const addComment = async (startupId: string, content: string) => {
+    if (!user) return;
+
     await client.models.Comment.create({
-      userId: userId,
+      userId: user.id,
       startupId,
       content,
       timestamp: new Date().toLocaleString('en-US', {

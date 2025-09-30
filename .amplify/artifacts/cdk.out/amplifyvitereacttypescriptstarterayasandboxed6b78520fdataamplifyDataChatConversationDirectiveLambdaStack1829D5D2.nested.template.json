@@ -130,7 +130,7 @@
           {
            "Ref": "AWS::Region"
           },
-          "::foundation-model/undefined"
+          "::foundation-model/anthropic.claude-3-5-sonnet-20240620-v1:0"
          ]
         ]
        }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useData } from '../contexts/DataContext';
 import { useNotifications } from '../contexts/NotificationContext';
@@ -20,19 +20,19 @@ import {
 
 const Profile: React.FC = () => {
   const { user, updateUser } = useAuth();
-  const { startups, jobs, jobSeekers, investors, getUserById } = useData();
+  const { startups, jobs } = useData();
   const { addNotification } = useNotifications();
   
   const [isEditing, setIsEditing] = useState(false);
   const [editedProfile, setEditedProfile] = useState({
     name: user?.name || '',
     email: user?.email || '',
-    phone: user?.phone || '',
-    linkedin: user?.linkedin || '',
-    bio: user?.bio || '',
+    phone: '',
+    linkedin: '',
+    bio: '',
     location: {
-      city: user?.city || '',
-      country: user?.country || ''
+      city: user?.location?.city || '',
+      country: user?.location?.country || ''
     },
     // Job seeker specific
     skills: [] as string[],
@@ -78,46 +78,12 @@ const Profile: React.FC = () => {
 
   const userStartup = startups.find(s => s.founderId === user.id);
   const userJobs = jobs.filter(j => j.startupId === userStartup?.id);
-  const userJobSeeker = jobSeekers.find(js => js.userId === user.id);
-  const userInvestor = investors.find(inv => inv.userId === user.id);
-
-  // Update editedProfile when user data changes
-  useEffect(() => {
-    if (user) {
-      setEditedProfile({
-        name: user.name || '',
-        email: user.email || '',
-        phone: user.phone || '',
-        linkedin: user.linkedin || '',
-        bio: user.bio || '',
-        location: {
-          city: user.city || '',
-          country: user.country || ''
-        },
-        // Job seeker specific
-        skills: userJobSeeker?.skills || [],
-        desiredSalary: userJobSeeker?.desiredSalary || 0,
-        education: [],
-        experience: [],
-        certifications: userJobSeeker?.certifications || [],
-        languages: userJobSeeker?.languages || [],
-        // Investor specific
-        investmentRange: userInvestor?.investmentRange || '',
-        sectors: userInvestor?.sectors || [],
-        geography: []
-      });
-    }
-  }, [user, userJobSeeker, userInvestor]);
 
   const handleSaveProfile = async () => {
     try {
       await updateUser({
         name: editedProfile.name,
-        phone: editedProfile.phone,
-        linkedin: editedProfile.linkedin,
-        bio: editedProfile.bio,
-        city: editedProfile.location.city,
-        country: editedProfile.location.country
+        location: editedProfile.location.city ? editedProfile.location : undefined
       });
       
       addNotification({
@@ -201,7 +167,7 @@ const Profile: React.FC = () => {
                       placeholder="+20 (123) 456-7890"
                     />
                   ) : (
-                    <p className="text-white">{user.phone || 'Not provided'}</p>
+                    <p className="text-white">{editedProfile.phone || 'Not provided'}</p>
                   )}
                 </div>
 
@@ -216,7 +182,7 @@ const Profile: React.FC = () => {
                       placeholder="https://linkedin.com/in/yourname"
                     />
                   ) : (
-                    <p className="text-white">{user.linkedin || 'Not provided'}</p>
+                    <p className="text-white">{editedProfile.linkedin || 'Not provided'}</p>
                   )}
                 </div>
 
@@ -247,8 +213,8 @@ const Profile: React.FC = () => {
                     </div>
                   ) : (
                     <p className="text-white">
-                      {user.city && user.country 
-                        ? `${user.city}, ${user.country}`
+                      {editedProfile.location.city && editedProfile.location.country 
+                        ? `${editedProfile.location.city}, ${editedProfile.location.country}`
                         : 'Not provided'
                       }
                     </p>
@@ -266,7 +232,7 @@ const Profile: React.FC = () => {
                       placeholder="Tell us about yourself..."
                     />
                   ) : (
-                    <p className="text-white">{user.bio || 'Not provided'}</p>
+                    <p className="text-white">{editedProfile.bio || 'Not provided'}</p>
                   )}
                 </div>
               </div>
@@ -323,7 +289,7 @@ const Profile: React.FC = () => {
                 <div className="bg-gray-800 rounded-2xl shadow-lg border border-gray-700 p-6">
                   <h3 className="text-xl font-semibold text-white mb-4">Skills</h3>
                   <div className="flex flex-wrap gap-2 mb-4">
-                    {(userJobSeeker?.skills || []).map((skill, index) => (
+                    {editedProfile.skills.map((skill, index) => (
                       <span
                         key={index}
                         className="px-3 py-1 bg-[#B8860B]/10 text-[#B8860B] rounded-full text-sm flex items-center gap-2"
@@ -342,9 +308,6 @@ const Profile: React.FC = () => {
                         )}
                       </span>
                     ))}
-                    {(!userJobSeeker?.skills || userJobSeeker.skills.length === 0) && (
-                      <span className="text-gray-400 text-sm">No skills added yet</span>
-                    )}
                   </div>
                   {isEditing && (
                     <div className="flex space-x-2">

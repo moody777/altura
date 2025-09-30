@@ -4,7 +4,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { Crown, Eye, EyeOff, ArrowLeft, TrendingUp, Users, DollarSign } from 'lucide-react';
 
 const Auth: React.FC = () => {
-  const { user, signIn, signUp, confirmSignUp, clearAuthState, loading } = useAuth();
+  const { user, signIn, signUp, confirmSignUp, loading } = useAuth();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -81,9 +81,7 @@ const Auth: React.FC = () => {
       } else if (authStep === 'confirm') {
         await confirmSignUp(formData.email, formData.confirmationCode);
       } else {
-        console.error('Auth attempt:');
         await signIn(formData.email, formData.password);
-        console.error('Auth success:');
       }
     } catch (error: any) {
       console.error('Auth error:', error);
@@ -99,12 +97,6 @@ const Auth: React.FC = () => {
         setError('Verification code has expired. Please request a new one.');
       } else if (error.message?.includes('User not found')) {
         setError('No account found with this email. Please sign up first.');
-      } else if (error.message?.includes('User account not found')) {
-        setError('Account not found. Please contact support.');
-      } else if (error.message?.includes('already signed in')) {
-        setError('You are already signed in. Please sign out first or refresh the page.');
-      } else if (error.name === 'UserAlreadyAuthenticatedException') {
-        setError('You are already signed in. Please sign out first or refresh the page.');
       } else {
         setError('An error occurred. Please try again.');
       }
@@ -240,25 +232,6 @@ const Auth: React.FC = () => {
           {error && (
             <div className="mb-4 p-3 bg-red-900/20 border border-red-700 rounded-lg">
               <p className="text-red-300 text-sm">{error}</p>
-              {(error.includes('already signed in') || error.includes('UserAlreadyAuthenticatedException')) && (
-                <div className="mt-3">
-                  <button
-                    onClick={async () => {
-                      try {
-                        // Force clear auth state and reload
-                        await clearAuthState();
-                        window.location.reload();
-                      } catch (err) {
-                        console.error('Clear auth state failed:', err);
-                        window.location.reload();
-                      }
-                    }}
-                    className="text-sm text-[#B8860B] hover:text-[#A67C00] transition-colors"
-                  >
-                    Sign out and refresh →
-                  </button>
-                </div>
-              )}
             </div>
           )}
 

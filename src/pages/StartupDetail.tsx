@@ -61,7 +61,7 @@ const StartupDetail: React.FC = () => {
   const handleAddComment = (e: React.FormEvent) => {
     e.preventDefault();
     if (newComment.trim() && user && startup) {
-      addComment(startup.id, newComment.trim(), user?.id || '');
+      addComment(startup.id, newComment.trim());
       setNewComment('');
       
       addNotification({

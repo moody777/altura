@@ -4,5 +4,6 @@ import { schema } from './data/resource';
 
 defineBackend({
   auth,
-  schema,
+    schema,
+  
 });
